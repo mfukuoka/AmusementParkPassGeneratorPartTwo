@@ -12,6 +12,11 @@
 		A95EB1C520FEC7DD00153CCE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A95EB1C320FEC7DD00153CCE /* Main.storyboard */; };
 		A95EB1C720FEC7DE00153CCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A95EB1C620FEC7DE00153CCE /* Assets.xcassets */; };
 		A95EB1CA20FEC7DE00153CCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A95EB1C820FEC7DE00153CCE /* LaunchScreen.storyboard */; };
+		A95EB1D420FEC83E00153CCE /* AccessGranted.wav in Resources */ = {isa = PBXBuildFile; fileRef = A95EB1D220FEC83E00153CCE /* AccessGranted.wav */; };
+		A95EB1D520FEC83E00153CCE /* AccessDenied.wav in Resources */ = {isa = PBXBuildFile; fileRef = A95EB1D320FEC83E00153CCE /* AccessDenied.wav */; };
+		A95EB1D920FEC85E00153CCE /* AmusementPark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95EB1D620FEC85E00153CCE /* AmusementPark.swift */; };
+		A95EB1DA20FEC85E00153CCE /* Entrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95EB1D720FEC85E00153CCE /* Entrant.swift */; };
+		A95EB1DB20FEC85E00153CCE /* Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95EB1D820FEC85E00153CCE /* Pass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,11 @@
 		A95EB1C620FEC7DE00153CCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A95EB1C920FEC7DE00153CCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A95EB1CB20FEC7DE00153CCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A95EB1D220FEC83E00153CCE /* AccessGranted.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AccessGranted.wav; sourceTree = "<group>"; };
+		A95EB1D320FEC83E00153CCE /* AccessDenied.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AccessDenied.wav; sourceTree = "<group>"; };
+		A95EB1D620FEC85E00153CCE /* AmusementPark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmusementPark.swift; sourceTree = "<group>"; };
+		A95EB1D720FEC85E00153CCE /* Entrant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entrant.swift; sourceTree = "<group>"; };
+		A95EB1D820FEC85E00153CCE /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +64,27 @@
 		A95EB1BE20FEC7DC00153CCE /* AmusementParkPassGeneratorPartTwo */ = {
 			isa = PBXGroup;
 			children = (
+				A95EB1D120FEC80800153CCE /* Sounds */,
 				A95EB1BF20FEC7DD00153CCE /* AppDelegate.swift */,
 				A95EB1C120FEC7DD00153CCE /* ViewController.swift */,
 				A95EB1C320FEC7DD00153CCE /* Main.storyboard */,
 				A95EB1C620FEC7DE00153CCE /* Assets.xcassets */,
 				A95EB1C820FEC7DE00153CCE /* LaunchScreen.storyboard */,
 				A95EB1CB20FEC7DE00153CCE /* Info.plist */,
+				A95EB1D620FEC85E00153CCE /* AmusementPark.swift */,
+				A95EB1D720FEC85E00153CCE /* Entrant.swift */,
+				A95EB1D820FEC85E00153CCE /* Pass.swift */,
 			);
 			path = AmusementParkPassGeneratorPartTwo;
+			sourceTree = "<group>";
+		};
+		A95EB1D120FEC80800153CCE /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				A95EB1D320FEC83E00153CCE /* AccessDenied.wav */,
+				A95EB1D220FEC83E00153CCE /* AccessGranted.wav */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,8 +145,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A95EB1D420FEC83E00153CCE /* AccessGranted.wav in Resources */,
 				A95EB1CA20FEC7DE00153CCE /* LaunchScreen.storyboard in Resources */,
 				A95EB1C720FEC7DE00153CCE /* Assets.xcassets in Resources */,
+				A95EB1D520FEC83E00153CCE /* AccessDenied.wav in Resources */,
 				A95EB1C520FEC7DD00153CCE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,8 +160,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A95EB1DA20FEC85E00153CCE /* Entrant.swift in Sources */,
 				A95EB1C220FEC7DD00153CCE /* ViewController.swift in Sources */,
 				A95EB1C020FEC7DD00153CCE /* AppDelegate.swift in Sources */,
+				A95EB1DB20FEC85E00153CCE /* Pass.swift in Sources */,
+				A95EB1D920FEC85E00153CCE /* AmusementPark.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

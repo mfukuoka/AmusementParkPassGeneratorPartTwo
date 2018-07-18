@@ -10,8 +10,142 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    enum typeButton {
+        case Guest
+        case Employee
+        case Manager
+        case Vendor
+    }
+    enum subTypeButton {
+        case Child
+        case Adult
+        case Senior
+        case VIP
+    }
+    
+    @IBOutlet weak var guestButton: UIButton!
+    @IBOutlet weak var employeeButton: UIButton!
+    @IBOutlet weak var managerButton: UIButton!
+    @IBOutlet weak var vendorButton: UIButton!
+    
+    
+    @IBAction func typeMenuButton(_ sender: Any) {
+        if let sender = sender as? UIButton {
+            switch sender.tag {
+            case typeButton.Guest.hashValue:
+                guestButton.setTitleColor(.white, for: .normal)
+                employeeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                managerButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                vendorButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                
+                subTypeOneButton.setTitle("Child", for: .normal)
+                subTypeTwoButton.setTitle("Adult", for: .normal)
+                subTypeThreeButton.setTitle("Senior", for: .normal)
+                subTypeFourButton.setTitle("VIP", for: .normal)
+
+            case typeButton.Employee.hashValue:
+                guestButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                employeeButton.setTitleColor(.white, for: .normal)
+                managerButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                vendorButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeOneButton.setTitle("Food Services", for: .normal)
+                subTypeTwoButton.setTitle("Ride Services", for: .normal)
+                subTypeThreeButton.setTitle("Maintenance", for: .normal)
+                subTypeFourButton.setTitle("Contract", for: .normal)
+
+            case typeButton.Manager.hashValue:
+                guestButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                employeeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                managerButton.setTitleColor(.white, for: .normal)
+                vendorButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeOneButton.setTitle("", for: .normal)
+                subTypeTwoButton.setTitle("", for: .normal)
+                subTypeThreeButton.setTitle("", for: .normal)
+                subTypeFourButton.setTitle("", for: .normal)
+            case typeButton.Vendor.hashValue:
+                guestButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                employeeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                managerButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                vendorButton.setTitleColor(.white, for: .normal)
+                subTypeOneButton.setTitle("", for: .normal)
+                subTypeTwoButton.setTitle("", for: .normal)
+                subTypeThreeButton.setTitle("", for: .normal)
+                subTypeFourButton.setTitle("", for: .normal)
+            default:
+                fatalError()
+            }
+        }
+    }
+    
+    
+    
+    @IBOutlet weak var subTypeOneButton: UIButton!
+    @IBOutlet weak var subTypeTwoButton: UIButton!
+    @IBOutlet weak var subTypeThreeButton: UIButton!
+    @IBOutlet weak var subTypeFourButton: UIButton!
+    
+    @IBAction func subTypeMenuButton(_ sender: Any) {
+        if let sender = sender as? UIButton {
+            switch sender.tag {
+            case subTypeButton.Child.hashValue:
+                subTypeOneButton.setTitleColor(.white, for: .normal)
+                subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+            case subTypeButton.Adult.hashValue:
+                subTypeOneButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeTwoButton.setTitleColor(.white, for: .normal)
+                subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+            case subTypeButton.Senior.hashValue:
+                subTypeOneButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeThreeButton.setTitleColor(.white, for: .normal)
+                subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+            case subTypeButton.VIP.hashValue:
+                subTypeOneButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeFourButton.setTitleColor(.white, for: .normal)
+            default:
+                fatalError();
+            }
+        }
+    }
+    
+    
+    
+    @IBOutlet weak var dobTextField: UITextField!
+    @IBOutlet weak var ssnTextField: UITextField!
+    @IBOutlet weak var projectNumberTextField: UITextField!
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var companyTextField: UITextField!
+    @IBOutlet weak var streetAddressTextField: UITextField!
+    @IBOutlet weak var cityTextField: UITextField!
+    @IBOutlet weak var stateTextField: UITextField!
+    @IBOutlet weak var zipCodeTextField: UITextField!
+    @IBOutlet weak var dobLabel: UILabel!
+    @IBOutlet weak var ssnLabel: UILabel!
+    @IBOutlet weak var projectNumberLabel: UILabel!
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var lastNameLabel: UILabel!
+    @IBOutlet weak var companyLabel: UILabel!
+    @IBOutlet weak var streetLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var stateLabel: UILabel!
+    @IBOutlet weak var zipCodeLabel: UILabel!
+    @IBAction func populateDataButton(_ sender: Any) {
+    }
+    
+    func disable(_ textField: UITextField){
+        textField.isEnabled = false
+        textField.backgroundColor = UIColor(red: 217/255.0, green: 212/255.0, blue: 221/255.0, alpha: 1)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        disable(cityTextField)
+        
         
         //classic guest
         if let entrant = testCaseRegisterEntrant(type: .guest, subType: .classic, requiredInformation: [ : ])  {

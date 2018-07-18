@@ -18,40 +18,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hDV-pd-2JB" userLabel="Top Menu">
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hDV-pd-2JB" userLabel="Type Menu View">
                                 <rect key="frame" x="0.0" y="20" width="1024" height="75"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1bH-G7-h4m">
                                         <rect key="frame" x="0.0" y="0.0" width="256" height="75"/>
                                         <color key="backgroundColor" red="0.54117647058823526" green="0.42745098039215684" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <state key="normal" title="Guest">
                                             <color key="titleColor" red="0.99599260091781616" green="0.99221235513687134" blue="0.9920392632484436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="typeMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pbB-UA-zgG"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYI-gi-lQW">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYI-gi-lQW">
                                         <rect key="frame" x="256" y="0.0" width="256" height="75"/>
                                         <color key="backgroundColor" red="0.54117647058823526" green="0.42745098039215684" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <state key="normal" title="Employee">
-                                            <color key="titleColor" red="0.99599260091781616" green="0.99221235513687134" blue="0.9920392632484436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.99599260091781616" green="0.99221235513687134" blue="0.9920392632484436" alpha="0.45000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="typeMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6uC-fk-PeG"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHB-Px-bA0">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHB-Px-bA0">
                                         <rect key="frame" x="512" y="0.0" width="256" height="75"/>
                                         <color key="backgroundColor" red="0.54117647058823526" green="0.42745098039215684" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <state key="normal" title="Manager">
-                                            <color key="titleColor" red="0.99599260091781616" green="0.99221235513687134" blue="0.9920392632484436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.99599260091781616" green="0.99221235513687134" blue="0.9920392632484436" alpha="0.45000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="typeMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1rU-MM-kPR"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2nf-sQ-nW4">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2nf-sQ-nW4">
                                         <rect key="frame" x="768" y="0.0" width="256" height="75"/>
                                         <color key="backgroundColor" red="0.54117647058823526" green="0.42745098039215684" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <state key="normal" title="Vendor">
-                                            <color key="titleColor" red="0.99599260091781616" green="0.99221235513687134" blue="0.9920392632484436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.99599260091781616" green="0.99221235513687134" blue="0.9920392632484436" alpha="0.45000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="typeMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D4k-BE-B0b"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.54117647058823526" green="0.42745098039215684" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -59,40 +71,52 @@
                                     <constraint firstAttribute="height" constant="75" id="lJF-r6-yxv"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="yqF-n3-11Y" userLabel="Sub Menu">
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="yqF-n3-11Y" userLabel="Subtype Menu View">
                                 <rect key="frame" x="0.0" y="95" width="1024" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="voy-gA-um6">
                                         <rect key="frame" x="0.0" y="0.0" width="256" height="60"/>
                                         <color key="backgroundColor" red="0.24705882352941178" green="0.21176470588235294" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <state key="normal" title="Child">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="subTypeMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ke6-vm-7cI"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ou8-96-8T7">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ou8-96-8T7">
                                         <rect key="frame" x="256" y="0.0" width="256" height="60"/>
                                         <color key="backgroundColor" red="0.24705882352941178" green="0.21176470588235294" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <state key="normal" title="Adult">
-                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="0.65000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="subTypeMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QTi-5V-Sjc"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bK7-o3-MuA">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bK7-o3-MuA">
                                         <rect key="frame" x="512" y="0.0" width="256" height="60"/>
                                         <color key="backgroundColor" red="0.24705882352941178" green="0.21176470588235294" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <state key="normal" title="Senior">
-                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="0.65000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="subTypeMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="p1R-nm-Grd"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4o8-ue-ZhU">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4o8-ue-ZhU">
                                         <rect key="frame" x="768" y="0.0" width="256" height="60"/>
                                         <color key="backgroundColor" red="0.24705882352941178" green="0.21176470588235294" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <state key="normal" title="VIP">
-                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="0.65000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="subTypeMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ajA-Vh-Kgu"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.24705882352941178" green="0.21176470588235294" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -100,7 +124,7 @@
                                     <constraint firstAttribute="height" constant="60" id="xkU-rK-fLd"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="SN9-ON-xuE">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="SN9-ON-xuE" userLabel="Personal Information View">
                                 <rect key="frame" x="20" y="155" width="984" height="458"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ro0-0p-HXU">
@@ -275,7 +299,7 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cVL-pt-qyv">
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cVL-pt-qyv" userLabel="Buttons View">
                                 <rect key="frame" x="20" y="653" width="984" height="75"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0QO-Oy-owv">
@@ -293,6 +317,9 @@
                                         <state key="normal" title="Populate Data">
                                             <color key="titleColor" red="0.3411764705882353" green="0.57647058823529407" blue="0.55294117647058827" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="populateDataButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="u7b-LN-SML"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -318,6 +345,36 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="cityLabel" destination="l28-Qb-3qj" id="URe-a4-JmB"/>
+                        <outlet property="cityTextField" destination="csG-7r-Yht" id="RvR-17-U9T"/>
+                        <outlet property="companyLabel" destination="6Cn-1S-QkB" id="ndh-Jt-wtx"/>
+                        <outlet property="companyTextField" destination="kZv-MJ-kYP" id="rbr-l7-psZ"/>
+                        <outlet property="dobLabel" destination="ghh-0w-QKP" id="8gF-ig-dVK"/>
+                        <outlet property="dobTextField" destination="3IG-Dx-JaU" id="Hqe-A8-nVH"/>
+                        <outlet property="employeeButton" destination="PYI-gi-lQW" id="vzX-Zh-22k"/>
+                        <outlet property="firstNameLabel" destination="ig2-Lb-096" id="cf5-6Z-5vr"/>
+                        <outlet property="firstNameTextField" destination="UZK-8M-Jyu" id="UVO-ag-5xE"/>
+                        <outlet property="guestButton" destination="1bH-G7-h4m" id="61E-Q1-Dv9"/>
+                        <outlet property="lastNameLabel" destination="JbG-Ld-WFU" id="TmO-SX-jea"/>
+                        <outlet property="lastNameTextField" destination="fff-xF-GfQ" id="cgy-mu-uNb"/>
+                        <outlet property="managerButton" destination="FHB-Px-bA0" id="5yk-1n-xDb"/>
+                        <outlet property="projectNumberLabel" destination="lJS-Ex-EkV" id="xW2-4e-eEZ"/>
+                        <outlet property="projectNumberTextField" destination="jL4-Qf-CSg" id="QXA-Z5-Unw"/>
+                        <outlet property="ssnLabel" destination="sJv-UV-JzQ" id="gdd-An-fRo"/>
+                        <outlet property="ssnTextField" destination="Hq3-LU-ZJn" id="PZd-va-1gK"/>
+                        <outlet property="stateLabel" destination="MCq-PJ-wSQ" id="spa-sP-cJ0"/>
+                        <outlet property="stateTextField" destination="dkX-vs-1ow" id="Mn7-ww-evl"/>
+                        <outlet property="streetAddressTextField" destination="MFx-2E-pIU" id="vR4-xa-rNc"/>
+                        <outlet property="streetLabel" destination="Xyw-mI-LgR" id="nZ9-ec-2wK"/>
+                        <outlet property="subTypeFourButton" destination="4o8-ue-ZhU" id="W1P-HJ-NTo"/>
+                        <outlet property="subTypeOneButton" destination="voy-gA-um6" id="rfF-09-uq2"/>
+                        <outlet property="subTypeThreeButton" destination="bK7-o3-MuA" id="chu-8W-6AX"/>
+                        <outlet property="subTypeTwoButton" destination="ou8-96-8T7" id="LXV-dU-pZ6"/>
+                        <outlet property="vendorButton" destination="2nf-sQ-nW4" id="TEg-fl-Eyj"/>
+                        <outlet property="zipCodeLabel" destination="ySC-bI-5yG" id="cMN-Kq-vWM"/>
+                        <outlet property="zipCodeTextField" destination="yfM-Wx-q5F" id="E7k-f5-FhS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

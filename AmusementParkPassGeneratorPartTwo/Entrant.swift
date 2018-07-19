@@ -142,9 +142,11 @@ enum EntrantSubType {
     case classic
     case vip
     case child
+    case senior
     case foodService
     case rideService
     case maintenance
+    case contract
     case manager
 }
 

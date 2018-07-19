@@ -10,10 +10,15 @@ import Foundation
 
 struct AmusementPark {
     
+    //type subtype state of the program
+    //used for keeping track in the UI
+    var currentType: EntrantType
+    var currentSubType: EntrantSubType?
+    
     //register an entrant
     static func registerEntrant(_ type: EntrantType, _ subType: EntrantSubType, requiredInformation: [RequiredInformation : String?]) throws -> Entrant {
         
-        var pass = Pass(areaAccess: [.amusement], rideAccess: nil, discountAccess: [:]) //everyabody getta ride a ride
+        let pass = Pass(areaAccess: [.amusement], rideAccess: nil, discountAccess: [:]) //everyabody getta ride a ride
         var information: [RequiredInformation : String] = [ : ]
         //type is a guest
         if type == .guest {
@@ -147,35 +152,5 @@ struct AmusementPark {
         return Entrant(type: type, subType: subType, pass: pass, information: information)
     }
 
-
-   /* static func enterPark(pass: Pass) {
-        
-    }
-
-    static func rideRide(pass: Pass) throws {
-        if let pass = pass.rideAccess {
-            if pass.count > 0 {
-                //can they skip lines?
-                for access in pass {
-                    if access == .skipLines {
-                        print("Entrant goes to front of the line")
-                    }
-                }
-                //can they ride?
-                for access in pass {
-                    if access == .allRides {
-                        print("Entrant rides the ride")
-                    }
-                }
-            }
-            else {
-                throw RideAccessError.seeEntrantAccessRules
-            }
-        }
-        else{
-            throw RideAccessError.seeEntrantAccessRules
-        }
-        
-    }*/
 }
 

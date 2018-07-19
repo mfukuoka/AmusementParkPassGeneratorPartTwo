@@ -9,7 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var park = AmusementPark(currentType: .guest, currentSubType: .child)
+    
+    //used to keep track of the current type/sub type selected
+    var currentType: EntrantType = .guest
+    var currentSubType: EntrantSubType? = .child
     
     //Menu Button Entrant Type
     @IBOutlet weak var guestButton: UIButton!
@@ -42,8 +45,8 @@ class ViewController: UIViewController {
                 subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 setScreenInputFor(.guest, .child)
-                park.currentType = .guest
-                park.currentSubType = .child
+                currentType = .guest
+                currentSubType = .child
                 
             case typeButton.Employee.hashValue:
                 guestButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
@@ -59,8 +62,8 @@ class ViewController: UIViewController {
                 subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 setScreenInputFor(.employee, .foodService)
-                park.currentType = .employee
-                park.currentSubType = .foodService
+                currentType = .employee
+                currentSubType = .foodService
 
             case typeButton.Manager.hashValue:
                 guestButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
@@ -72,8 +75,8 @@ class ViewController: UIViewController {
                 subTypeThreeButton.setTitle("", for: .normal)
                 subTypeFourButton.setTitle("", for: .normal)
                 setScreenInputFor(.employee, .manager)
-                park.currentType = .employee
-                park.currentSubType = .manager
+                currentType = .employee
+                currentSubType = .manager
                 
             case typeButton.Vendor.hashValue:
                 guestButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
@@ -85,8 +88,8 @@ class ViewController: UIViewController {
                 subTypeThreeButton.setTitle("", for: .normal)
                 subTypeFourButton.setTitle("", for: .normal)
                 setScreenInputFor(.vendor, nil)
-                park.currentType = .vendor
-                park.currentSubType = nil
+                currentType = .vendor
+                currentSubType = nil
     
                 
             default:
@@ -120,13 +123,13 @@ class ViewController: UIViewController {
                 subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
-                switch park.currentType {
+                switch currentType {
                 case .employee:
                     setScreenInputFor(.employee, .foodService)
-                    park.currentSubType = .foodService
+                    currentSubType = .foodService
                 case .guest:
                     setScreenInputFor(.guest, .child)
-                    park.currentSubType = .child
+                    currentSubType = .child
                 default:
                     fatalError()
                 }
@@ -135,13 +138,13 @@ class ViewController: UIViewController {
                 subTypeTwoButton.setTitleColor(.white, for: .normal)
                 subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
-                switch park.currentType {
+                switch currentType {
                 case .employee:
                     setScreenInputFor(.employee, .rideService)
-                    park.currentSubType = .rideService
+                    currentSubType = .rideService
                 case .guest:
                     setScreenInputFor(.guest, .classic)
-                    park.currentSubType = .classic
+                    currentSubType = .classic
                 default:
                     fatalError()
                 }
@@ -150,13 +153,13 @@ class ViewController: UIViewController {
                 subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeThreeButton.setTitleColor(.white, for: .normal)
                 subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
-                switch park.currentType {
+                switch currentType {
                 case .employee:
                     setScreenInputFor(.employee, .maintenance)
-                    park.currentSubType = .maintenance
+                    currentSubType = .maintenance
                 case .guest:
                     setScreenInputFor(.guest, .senior)
-                    park.currentSubType = .senior
+                    currentSubType = .senior
                 default:
                     fatalError()
                 }
@@ -165,13 +168,13 @@ class ViewController: UIViewController {
                 subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeFourButton.setTitleColor(.white, for: .normal)
-                switch park.currentType {
+                switch currentType {
                 case .employee:
                     setScreenInputFor(.employee, .contract)
-                    park.currentSubType = .contract
+                    currentSubType = .contract
                 case .guest:
                     setScreenInputFor(.guest, .vip)
-                    park.currentSubType = .vip
+                    currentSubType = .vip
                 default:
                     fatalError()
                 }
@@ -314,7 +317,7 @@ class ViewController: UIViewController {
     }
 
 
-    //when the keyboard is shown then update the infostackview bottom constraint 
+    //when the keyboard is shown then update the infostackview bottom constraint
     @IBOutlet weak var infoStackViewBottom: NSLayoutConstraint!
     @objc func keyboardWillShow(_ notification: Notification){
         if let info = notification.userInfo, let keyboardFrame = info[UIKeyboardFrameEndUserInfoKey] as? NSValue {

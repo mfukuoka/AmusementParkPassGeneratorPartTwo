@@ -10,11 +10,6 @@ import Foundation
 
 struct AmusementPark {
     
-    //type subtype state of the program
-    //used for keeping track in the UI
-    var currentType: EntrantType
-    var currentSubType: EntrantSubType?
-    
     //register an entrant
     static func registerEntrant(_ type: EntrantType, _ subType: EntrantSubType, requiredInformation: [RequiredInformation : String?]) throws -> Entrant {
         

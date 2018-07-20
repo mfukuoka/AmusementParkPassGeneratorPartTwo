@@ -11,10 +11,11 @@ import Foundation
 struct AmusementPark {
     
     //register an entrant
-    static func registerEntrant(_ type: EntrantType, _ subType: EntrantSubType, requiredInformation: [RequiredInformation : String?]) throws -> Entrant {
+    static func registerEntrant(_ type: EntrantType, _ subType: EntrantSubType?, requiredInformation: [RequiredInformation : String?]) throws -> Entrant {
         
         let pass = Pass(areaAccess: [.amusement], rideAccess: nil, discountAccess: [:]) //everyabody getta ride a ride
         var information: [RequiredInformation : String] = [ : ]
+        if let subType = subType {
         //type is a guest
         if type == .guest {
             
@@ -35,7 +36,7 @@ struct AmusementPark {
 
                 //attempt to format the date
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
+                dateFormatter.dateFormat = "MM-dd-yyyy"
                 if let dobDate = dateFormatter.date(from: dob) {
                     let calendar: NSCalendar! = NSCalendar(calendarIdentifier: .gregorian)
                     let now = Date()
@@ -138,10 +139,23 @@ struct AmusementPark {
             }
             
         }
-        
-        /*if type == .vendor {
+        }
+        //MARK: implement if entrant is a vendor
+        if type == .vendor {
+            guard let dob = requiredInformation[.dob] as? String else {
+                throw RegistrationError.dob
+            }
             
-        }*/
+            information[.dob] = dob
+            guard let firstName = requiredInformation[.firstName] as? String else {
+                throw RegistrationError.firstName
+            }
+            information[.firstName] = firstName
+            guard let lastName = requiredInformation[.lastName] as? String else {
+                throw RegistrationError.lastName
+            }
+            information[.lastName] = lastName
+        }
      
         
         return Entrant(type: type, subType: subType, pass: pass, information: information)

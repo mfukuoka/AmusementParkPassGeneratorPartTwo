@@ -18,10 +18,10 @@ enum SwipeType {
 //entrant object holding information about the entrant and their level of access (pass)
 struct Entrant {
     var type: EntrantType
-    var subType: EntrantSubType
+    var subType: EntrantSubType?
     var pass: Pass
     var information: [RequiredInformation : String]
-    init(type: EntrantType, subType: EntrantSubType, pass: Pass, information: [RequiredInformation : String]){
+    init(type: EntrantType, subType: EntrantSubType?, pass: Pass, information: [RequiredInformation : String]){
         self.type = type
         self.subType = subType
         self.pass = pass

@@ -17,6 +17,7 @@
 		A95EB1D920FEC85E00153CCE /* AmusementPark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95EB1D620FEC85E00153CCE /* AmusementPark.swift */; };
 		A95EB1DA20FEC85E00153CCE /* Entrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95EB1D720FEC85E00153CCE /* Entrant.swift */; };
 		A95EB1DB20FEC85E00153CCE /* Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95EB1D820FEC85E00153CCE /* Pass.swift */; };
+		A9E448D121028EF800E95559 /* AccessTestingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E448D021028EF800E95559 /* AccessTestingController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		A95EB1D620FEC85E00153CCE /* AmusementPark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmusementPark.swift; sourceTree = "<group>"; };
 		A95EB1D720FEC85E00153CCE /* Entrant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entrant.swift; sourceTree = "<group>"; };
 		A95EB1D820FEC85E00153CCE /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
+		A9E448D021028EF800E95559 /* AccessTestingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTestingController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				A95EB1D120FEC80800153CCE /* Sounds */,
 				A95EB1BF20FEC7DD00153CCE /* AppDelegate.swift */,
 				A95EB1C120FEC7DD00153CCE /* ViewController.swift */,
+				A9E448D021028EF800E95559 /* AccessTestingController.swift */,
 				A95EB1C320FEC7DD00153CCE /* Main.storyboard */,
 				A95EB1C620FEC7DE00153CCE /* Assets.xcassets */,
 				A95EB1C820FEC7DE00153CCE /* LaunchScreen.storyboard */,
@@ -160,6 +163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9E448D121028EF800E95559 /* AccessTestingController.swift in Sources */,
 				A95EB1DA20FEC85E00153CCE /* Entrant.swift in Sources */,
 				A95EB1C220FEC7DD00153CCE /* ViewController.swift in Sources */,
 				A95EB1C020FEC7DD00153CCE /* AppDelegate.swift in Sources */,

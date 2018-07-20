@@ -185,8 +185,181 @@ class ViewController: UIViewController {
         }
 
     }
+    @IBAction func generatePass(_ sender: Any) {
+        //MARK: Check that all required information is being passed i.e. management type etc.
+        
+        var requiredInformation: [RequiredInformation : String] = [ : ]
+        if let firstName = firstNameTextField.text {
+            requiredInformation[.firstName] = firstName
+       
+        }
+        if let lastName = lastNameTextField.text {
+            requiredInformation[.lastName] = lastName
+            
+        }
+        if let streetAddress = streetAddressTextField.text {
+            requiredInformation[.streetAddress] = streetAddress
+        }
+        if let city = cityTextField.text{
+            requiredInformation[.city] = city
+        }
+        if let state = stateTextField.text {
+            requiredInformation[.state] = state
+        }
+        if let zipCode = zipCodeTextField.text{
+            requiredInformation[.zipCode] = zipCode
+        }
+        if let ssn = ssnTextField.text{
+            requiredInformation[.ssn] = ssn
+        }
+        if let dob = dobTextField.text {
+            requiredInformation[.dob] = dob
+        }
+        requiredInformation[.managementTier] = "Shift Manager"
+            //companyTextField.text = ""
+            //projectNumberTextField.text = ""
+       
+        //register a entrant
+        do {
+            let entrant = try AmusementPark.registerEntrant(currentType, currentSubType, requiredInformation: requiredInformation)
+            //MARK: Pass entrant to testing screen for checking access levels.
+             testCaseSwipeAtAllKiosks(entrant)
+            //let accessTestingViewController = AccessTestingController()
+            //self.navigationController?.pushViewController(accessTestingViewController, animated: true)
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let accessTestingViewController = storyBoard.instantiateViewController(withIdentifier: "accessTestingViewController") as! AccessTestingController
+            accessTestingViewController.entrant = entrant
+            
+            self.present(accessTestingViewController, animated: true, completion: nil)
+            
+        }
+        catch let error as RegistrationError {
+            switch error {
+            case .dob:
+                print("You must provide a date of birth.")
+            case .dobUnderFiveYears:
+                print("You must be under 5 years old to be a child guest.")
+            case .firstName:
+                print("Please provide a first name")
+            case .lastName:
+                print("Please provide a last name")
+            case .streetAddress:
+                print("Please provide a street address")
+            case .city:
+                print("Please provide a city")
+            case .state:
+                print("Please provide a state")
+            case .zipCode:
+                print("Please provide a zipcode")
+            case .ssn:
+                print("Please provide a social security number")
+            case .managementTier:
+                print("Please provide a management tier")
+            case .subTypeNotFound:
+                print("The provided subtype has no matching type")
+            case .verbose(let message):
+                print(message)
+            }
+        }
+        catch let error {
+            print(error)
+        }
+    }
     
+    @IBAction func populateDataButton(_ sender: Any) {
+        populateData()
+    }
     
+    //clears data out based on type/subtype and populates what is needed
+    func populateData() {
+
+        switch currentType {
+        case .employee:
+            if currentSubType == .foodService ||
+                currentSubType == .maintenance ||
+                currentSubType == .rideService
+            {
+                projectNumberTextField.text = ""
+                companyTextField.text = ""
+                firstNameTextField.text = "Masanobu"
+                lastNameTextField.text = "Fukuoka"
+                streetAddressTextField.text = "123 Street"
+                cityTextField.text = "New York"
+                stateTextField.text = "NY"
+                zipCodeTextField.text = "123456"
+                dobTextField.text = "01/01/1971"
+                ssnTextField.text = "123-12-1234"
+            }
+            if currentSubType == .manager {
+                projectNumberTextField.text = ""
+                companyTextField.text = ""
+                firstNameTextField.text = "Masanobu"
+                lastNameTextField.text = "Fukuoka"
+                streetAddressTextField.text = "123 Street"
+                cityTextField.text = "New York"
+                stateTextField.text = "NY"
+                zipCodeTextField.text = "123456"
+                dobTextField.text = "01/01/1971"
+                ssnTextField.text = "123-12-1234"
+                //MARK: management tier needs implemented. Mockups don't show a textfield. Watch project again.
+            }
+            if currentSubType == .contract {
+                companyTextField.text = ""
+                projectNumberTextField.text = "Project 0x"
+                firstNameTextField.text = "Masanobu"
+                lastNameTextField.text = "Fukuoka"
+                streetAddressTextField.text = "123 Street"
+                cityTextField.text = "New York"
+                stateTextField.text = "NY"
+                zipCodeTextField.text = "123456"
+                dobTextField.text = "01/01/1971"
+                ssnTextField.text = "123-12-1234"
+            }
+        case .guest:
+            if currentSubType == .child {
+                let calendar = Calendar.current
+                let childsAge = calendar.date(byAdding: .year, value: -4, to: Date())
+                if let childsAge = childsAge {
+                    let dateFormatterPrint = DateFormatter()
+                    dateFormatterPrint.dateFormat = "MM-dd-yyyy"
+                    dobTextField.text = dateFormatterPrint.string(from: childsAge)
+                }
+            }
+            if currentSubType == .senior {
+                companyTextField.text = ""
+                projectNumberTextField.text = ""
+                firstNameTextField.text = "Masanobu"
+                lastNameTextField.text = "Fukuoka"
+                streetAddressTextField.text = ""
+                cityTextField.text = ""
+                stateTextField.text = ""
+                zipCodeTextField.text = ""
+                ssnTextField.text = ""
+                let calendar = Calendar.current
+                let seniorsAge = calendar.date(byAdding: .year, value: -65, to: Date())
+                if let seniorsAge = seniorsAge {
+                    let dateFormatterPrint = DateFormatter()
+                    dateFormatterPrint.dateFormat = "MM-dd-yyyy"
+                    dobTextField.text = dateFormatterPrint.string(from: seniorsAge)
+                }
+            }
+        case .vendor:
+            projectNumberTextField.text = ""
+            companyTextField.text = "Sysco Food Products"
+            firstNameTextField.text = "Masanobu"
+            lastNameTextField.text = "Fukuoka"
+            streetAddressTextField.text = ""
+            cityTextField.text = ""
+            stateTextField.text = ""
+            zipCodeTextField.text = ""
+            dobTextField.text = "01/01/1971"
+            ssnTextField.text = ""
+            let now = Date()
+            //MARK: date of visit, store this is Entrant object.
+            
+        }
+        
+    }
     
     @IBOutlet weak var dobTextField: UITextField!
     @IBOutlet weak var ssnTextField: UITextField!
@@ -208,11 +381,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var stateLabel: UILabel!
     @IBOutlet weak var zipCodeLabel: UILabel!
-    @IBAction func populateDataButton(_ sender: Any) {
-    }
+
     
     func setScreenInputFor(_ type: EntrantType, _ subType: EntrantSubType?) {
-        
+        //clear inputs
+        //MARK: rather than clear inputs when switching types and subtypes it should carry over data(text.count>0) that is allowed for that type/subtype
         //go through the possible type/subtype combinations
         if let subType = subType {
             if type == .guest {
@@ -272,9 +445,20 @@ class ViewController: UIViewController {
                     enable(dobTextField)
                     enable(ssnTextField)
                     
-                case .manager, .contract:
+                case .manager:
+                    disable(projectNumberTextField)
+                    disable(companyTextField)
+                    enable(firstNameTextField)
+                    enable(lastNameTextField)
+                    enable(streetAddressTextField)
+                    enable(cityTextField)
+                    enable(stateTextField)
+                    enable(zipCodeTextField)
+                    enable(dobTextField)
+                    enable(ssnTextField)
+                case .contract:
                     enable(projectNumberTextField)
-                    enable(companyTextField)
+                    disable(companyTextField)
                     enable(firstNameTextField)
                     enable(lastNameTextField)
                     enable(streetAddressTextField)
@@ -309,6 +493,7 @@ class ViewController: UIViewController {
     //used for enable/disable plus coloring
     func disable(_ textField: UITextField){
         textField.isEnabled = false
+        textField.text = ""
         textField.backgroundColor = UIColor(red: 217/255.0, green: 212/255.0, blue: 221/255.0, alpha: 1)
     }
     func enable(_ textField: UITextField){
@@ -319,10 +504,12 @@ class ViewController: UIViewController {
 
     //when the keyboard is shown then update the infostackview bottom constraint
     @IBOutlet weak var infoStackViewBottom: NSLayoutConstraint!
+
     @objc func keyboardWillShow(_ notification: Notification){
         if let info = notification.userInfo, let keyboardFrame = info[UIKeyboardFrameEndUserInfoKey] as? NSValue {
             let frame = keyboardFrame.cgRectValue
             infoStackViewBottom.constant = frame.size.height
+            
             UIView.animate(withDuration: 0.8) {
                 self.view.layoutIfNeeded()
             }
@@ -331,7 +518,8 @@ class ViewController: UIViewController {
     
     //when keyboard is hidden set infostackview bottom constrant back to 40
     @objc func keyboardWillHide(_ notification: Notification){
-        infoStackViewBottom.constant = 40
+        infoStackViewBottom.constant = 75
+        
         UIView.animate(withDuration: 0.8) {
             self.view.layoutIfNeeded()
         }
@@ -363,12 +551,12 @@ class ViewController: UIViewController {
 
         
         //classic guest
-        if let entrant = testCaseRegisterEntrant(type: .guest, subType: .classic, requiredInformation: [ : ])  {
+        /*if let entrant = testCaseRegisterEntrant(type: .guest, subType: .classic, requiredInformation: [ : ])  {
             testCaseSwipeAtAllKiosks(entrant)
         }
         else{
             print("An Entrant wasn't created. Please see error above.\n--------------------------------\n")
-        }
+        }*/
         
         /*Test case for each entrant type
          //vip guest

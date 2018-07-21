@@ -484,6 +484,9 @@
                                                         <state key="normal" title="Area Access">
                                                             <color key="titleColor" red="0.23921568627450981" green="0.5490196078431373" blue="0.51764705882352946" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="areaAccessButton:" destination="LNy-Us-7rt" eventType="touchUpInside" id="FkH-SR-gw7"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dEb-zj-yBY">
                                                         <rect key="frame" x="249.5" y="0.0" width="229" height="50"/>
@@ -491,6 +494,9 @@
                                                         <state key="normal" title="Ride Access">
                                                             <color key="titleColor" red="0.23921568627450981" green="0.5490196078431373" blue="0.51764705882352946" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="rideAccessButton:" destination="LNy-Us-7rt" eventType="touchUpInside" id="hXq-Qw-f39"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0P-gb-yig">
                                                         <rect key="frame" x="498.5" y="0.0" width="229.5" height="50"/>
@@ -498,6 +504,9 @@
                                                         <state key="normal" title="Discount Access">
                                                             <color key="titleColor" red="0.23921568627450981" green="0.5490196078431373" blue="0.51764705882352946" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="discountAccessButton:" destination="LNy-Us-7rt" eventType="touchUpInside" id="fSL-7l-uVm"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -566,6 +575,7 @@
                         <outlet property="accessDescriptionLabel" destination="GN2-fO-zM1" id="gEG-Pi-fxW"/>
                         <outlet property="fullnameLabel" destination="RZP-DM-n5n" id="NiF-o3-PB5"/>
                         <outlet property="levelOfAccessLabel" destination="hkN-Gl-blF" id="TaT-Hm-5cF"/>
+                        <outlet property="testResultsLabel" destination="DiB-ZH-BaE" id="bHR-rr-W1S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zn8-Ds-fQR" userLabel="First Responder" sceneMemberID="firstResponder"/>

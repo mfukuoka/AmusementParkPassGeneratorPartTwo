@@ -189,30 +189,30 @@ class ViewController: UIViewController {
         //MARK: Check that all required information is being passed i.e. management type etc.
         
         var requiredInformation: [RequiredInformation : String] = [ : ]
-        if let firstName = firstNameTextField.text {
+      
+        if let firstName = firstNameTextField.text, firstName.count > 0 {
             requiredInformation[.firstName] = firstName
-       
         }
         if let lastName = lastNameTextField.text {
             requiredInformation[.lastName] = lastName
             
         }
-        if let streetAddress = streetAddressTextField.text {
+        if let streetAddress = streetAddressTextField.text, streetAddress.count > 0  {
             requiredInformation[.streetAddress] = streetAddress
         }
-        if let city = cityTextField.text{
+        if let city = cityTextField.text, city.count > 0 {
             requiredInformation[.city] = city
         }
-        if let state = stateTextField.text {
+        if let state = stateTextField.text, state.count > 0 {
             requiredInformation[.state] = state
         }
-        if let zipCode = zipCodeTextField.text{
+        if let zipCode = zipCodeTextField.text, zipCode.count > 0 {
             requiredInformation[.zipCode] = zipCode
         }
-        if let ssn = ssnTextField.text{
+        if let ssn = ssnTextField.text, ssn.count > 0{
             requiredInformation[.ssn] = ssn
         }
-        if let dob = dobTextField.text {
+        if let dob = dobTextField.text, dob.count > 0  {
             requiredInformation[.dob] = dob
         }
         requiredInformation[.managementTier] = "Shift Manager"
@@ -223,9 +223,6 @@ class ViewController: UIViewController {
         do {
             let entrant = try AmusementPark.registerEntrant(currentType, currentSubType, requiredInformation: requiredInformation)
             //MARK: Pass entrant to testing screen for checking access levels.
-             testCaseSwipeAtAllKiosks(entrant)
-            //let accessTestingViewController = AccessTestingController()
-            //self.navigationController?.pushViewController(accessTestingViewController, animated: true)
             let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let accessTestingViewController = storyBoard.instantiateViewController(withIdentifier: "accessTestingViewController") as! AccessTestingController
             accessTestingViewController.entrant = entrant
@@ -236,36 +233,49 @@ class ViewController: UIViewController {
         catch let error as RegistrationError {
             switch error {
             case .dob:
-                print("You must provide a date of birth.")
+                showAlertWith(title: "Registration Error", message: "You must provide a date of birth")
             case .dobUnderFiveYears:
-                print("You must be under 5 years old to be a child guest.")
+                showAlertWith(title: "Registration Error", message: "You must be under 5 years old to be a child guest.")
+            case .dobNotOverSixtyFiveYearsOld:
+                showAlertWith(title: "Registration Error", message: "You must be 65 years or older to be a senior guest.")
+            case .dobWrongFormat:
+                showAlertWith(title: "Registration Error", message: "Date must be in MM-dd-yyyy format.")
             case .firstName:
-                print("Please provide a first name")
+                showAlertWith(title: "Registration Error", message: "Please provide a first name")
             case .lastName:
-                print("Please provide a last name")
+                showAlertWith(title: "Registration Error", message: "Please provide a last name")
             case .streetAddress:
-                print("Please provide a street address")
+                showAlertWith(title: "Registration Error", message: "Please provide a street address")
             case .city:
-                print("Please provide a city")
+                showAlertWith(title: "Registration Error", message: "Please provide a city")
             case .state:
-                print("Please provide a state")
+                showAlertWith(title: "Registration Error", message: "Please provide a state")
             case .zipCode:
-                print("Please provide a zipcode")
+                showAlertWith(title: "Registration Error", message: "Please provide a zipcode")
             case .ssn:
-                print("Please provide a social security number")
+                showAlertWith(title: "Registration Error", message: "Please provide a social security number")
             case .managementTier:
-                print("Please provide a management tier")
+                showAlertWith(title: "Registration Error", message: "Please provide a management tier")
             case .subTypeNotFound:
-                print("The provided subtype has no matching type")
+                showAlertWith(title: "Registration Error", message: "The provided subtype has no matching type")
             case .verbose(let message):
-                print(message)
+                showAlertWith(title: "Error", message: message)
             }
         }
         catch let error {
             print(error)
         }
     }
-    
+
+    func showAlertWith(title: String, message: String, style: UIAlertControllerStyle = .alert){
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+
     @IBAction func populateDataButton(_ sender: Any) {
         populateData()
     }
@@ -644,7 +654,7 @@ class ViewController: UIViewController {
     
     
     //test case function for when a entrant arrives to the park and registers.
-    func testCaseRegisterEntrant(type: EntrantType, subType: EntrantSubType, requiredInformation: [RequiredInformation : String?]) -> Entrant? {
+    /*func testCaseRegisterEntrant(type: EntrantType, subType: EntrantSubType, requiredInformation: [RequiredInformation : String?]) -> Entrant? {
         print("Registering a \(type) - \(subType)\n--------------------------------")
         //register a entrant
         do {
@@ -739,7 +749,7 @@ class ViewController: UIViewController {
             print("Swiped pass again: \(result.message)")
         }
     }
-    
+    */
     
 }
 

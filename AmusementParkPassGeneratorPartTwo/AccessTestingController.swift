@@ -21,7 +21,62 @@ class AccessTestingController: UIViewController {
         if let entrant = entrant {
             setScreenFor(entrant)
         }
-     
+        else { fatalError()}
+        
+    }
+    @IBOutlet weak var testResultsLabel: UILabel!
+    @IBAction func areaAccessButton(_ sender: Any) {
+        if let entrant = entrant {
+            var testResults = ""
+            //try entering the park using the swipe method
+            var result = entrant.swipePass(.areaAccess, kioskArea: .amusement)
+            testResults += result.message
+            
+            //try entering the kitchen
+            result = entrant.swipePass(.areaAccess, kioskArea: .kitchen)
+            testResults += result.message
+            
+            //try accessing maintenance area
+            result = entrant.swipePass(.areaAccess, kioskArea: .maintenance)
+            testResults += result.message
+            
+            //try accessing office area
+            result = entrant.swipePass(.areaAccess, kioskArea: .office)
+            testResults += result.message
+            
+            //try accessing ride controls area
+            result = entrant.swipePass(.areaAccess, kioskArea: .rideControl)
+            testResults += result.message
+            
+            testResultsLabel.text = testResults
+        }
+    }
+    
+    @IBAction func rideAccessButton(_ sender: Any) {
+        if let entrant = entrant {
+            var testResults = ""
+            //try riding a ride
+            var result = entrant.swipePass(.rideAccess, kioskArea: nil)
+            testResults += result.message
+            
+            //swipe again to test 5 seconds between possible scanning
+            //result = entrant.swipePass(.rideAccess, kioskArea: nil)
+            //testResults += result.message
+            
+            testResultsLabel.text = testResults
+        }
+        
+    }
+    
+    @IBAction func discountAccessButton(_ sender: Any) {
+        if let entrant = entrant {
+            var testResults = ""
+            //purchase something and get a discount
+            let result = entrant.swipePass(.discountAccess, kioskArea: nil)
+            testResults += result.message
+            testResultsLabel.text = testResults
+        }
+        
     }
     
     func setScreenFor(_ entrant: Entrant){
@@ -47,7 +102,7 @@ class AccessTestingController: UIViewController {
         
         //set the access description label based on the type/subtype of entrant
         accessDescriptionLabel.text = entrant.entrantAccessDescription()
-    
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

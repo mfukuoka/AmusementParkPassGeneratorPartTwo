@@ -258,6 +258,8 @@ enum RequiredInformation {
 enum RegistrationError: Error {
     case dob
     case dobUnderFiveYears
+    case dobNotOverSixtyFiveYearsOld
+    case dobWrongFormat
     case firstName
     case lastName
     case streetAddress

@@ -155,6 +155,7 @@ struct AmusementPark {
                 throw RegistrationError.lastName
             }
             information[.lastName] = lastName
+            pass.areaAccess.append(.kitchen)
         }
      
         

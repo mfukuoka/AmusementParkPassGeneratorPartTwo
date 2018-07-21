@@ -131,6 +131,99 @@ extension Entrant {
         //"failing"
         return (false, "Please see Entrant Access Rules")
     }
+    
+    
+    //returns a string of all access as an unordered list
+    func entrantAccessDescription() -> String {
+        var description = ""
+        var counter = 0
+        
+        for area in self.pass.areaAccess {
+            switch area {
+            case .amusement:
+                description += (counter == 0 ? "•" : ",") + " Amusement Area Access"
+            case .kitchen:
+                description += (counter == 0 ? "•" : ",") + " Kitchen Area Access"
+            case .maintenance:
+                description += (counter == 0 ? "•" : ",") + " Maintenance Area Access"
+            case .office:
+                description += (counter == 0 ? "•" : ",") + " Office Area Access"
+            case .rideControl:
+                description += (counter == 0 ? "•" : ",") + " Ride Control Area Access"
+            }
+            counter += 1
+        }
+        if counter > 0 {
+        description += "\n"
+        }
+        
+        counter = 0
+        if let rideAccess = self.pass.rideAccess {
+            for ride in rideAccess {
+                switch ride {
+                case .allRides:
+                    description += (counter == 0 ? "•" : ",") + " Access All Rides"
+                case .skipLines:
+                     description += (counter == 0 ? "•" : ",") + " Skip All Ride Lines"
+                }
+                counter += 1
+            }
+            if counter > 0 {
+            description += "\n"
+            }
+        }
+        counter = 0
+        for discount in self.pass.discountAccess {
+            switch discount.key {
+            case .food:
+                description += (counter == 0 ? "•" : ",") + " \(discount.value)% Food Discount"
+            case .merchandise:
+                description += (counter == 0 ? "•" : ",") + " \(discount.value)% Merch Discount"
+            }
+            counter += 1
+        }
+        if counter > 0 {
+        description += "\n"
+        }
+        
+        
+        return description
+    }
+    
+    func entrantDescription() -> String {
+        var description = ""
+        if let subType = self.subType {
+            switch subType {
+            case .child:
+                description = "Child "
+            case .classic:
+                description =  "Adult "
+            case .contract:
+                description =  "Contract "
+            case .foodService:
+                description =  "Food Services "
+            case .maintenance:
+                description =  "Maintenance "
+            case .manager:
+                description =  "Manager "
+            case .rideService:
+                description =  "Ride Services "
+            case .senior:
+                description =  "Senior "
+            case .vip:
+                description =  "VIP "
+            }
+        }
+        switch self.type {
+        case .guest:
+            description +=  "Guest"
+        case .employee:
+            description +=  "Employee"
+        case .vendor:
+            description +=  "Vendor"
+        }
+        return description
+    }
 }
 
 enum EntrantType {
@@ -138,6 +231,7 @@ enum EntrantType {
     case employee
     case vendor
 }
+
 enum EntrantSubType {
     case classic
     case vip

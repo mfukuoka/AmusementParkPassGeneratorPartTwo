@@ -8,6 +8,36 @@
 
 import Foundation
 
+//used for checking social security number
+extension String {
+    func matchesSSN() -> Bool {
+        return self.range(of: "\\d{3}-\\d{2}-\\d{4}", options: .regularExpression, range: nil, locale: nil) != nil
+    }
+    //if the field is of a reasonable length then return it otherwise throw a field too long error
+    func isReasonableLength(_ field: RequiredInformation) throws -> String {
+        var of: Int = 0
+        switch field {
+
+        case .firstName:
+            of = 10
+        case .lastName:
+            of = 15
+        case .streetAddress:
+            of = 30
+        case .city:
+            of = 15
+        case .state:
+            of = 10
+            default:
+            return self
+        }
+        if self.count > of {
+            throw RegistrationError.fieldTooLong(field: field, limit: "\(of)")
+        }
+        return self
+    }
+}
+
 struct AmusementPark {
     
     //register an entrant
@@ -21,16 +51,42 @@ struct AmusementPark {
                 
                 //classic guest
                 switch subType {
-                case .senior:
-                    //firstname and lastname
+                case .season:
                     guard let firstName = requiredInformation[.firstName] as? String else {
                         throw RegistrationError.firstName
                     }
-                    information[.firstName] = firstName
+                    information[.firstName] = try firstName.isReasonableLength(.firstName)
                     guard let lastName = requiredInformation[.lastName] as? String else {
                         throw RegistrationError.lastName
                     }
-                    information[.lastName] = lastName
+                    information[.lastName] = try lastName.isReasonableLength(.lastName)
+                    guard let streetAddress = requiredInformation[.streetAddress] as? String else {
+                        throw RegistrationError.streetAddress
+                    }
+                    information[.streetAddress] = try streetAddress.isReasonableLength(.streetAddress)
+                    guard let city = requiredInformation[.city] as? String else {
+                        throw RegistrationError.city
+                    }
+                    information[.city] = try city.isReasonableLength(.city)
+                    guard let state = requiredInformation[.state] as? String else {
+                        throw RegistrationError.state
+                    }
+                    information[.state] = try state.isReasonableLength(.state)
+                    guard let zipCode = requiredInformation[.zipCode] as? String else {
+                        throw RegistrationError.zipCode
+                    }
+                    let zip:Int? = Int(zipCode)
+                    if zip == nil {
+                        throw RegistrationError.zipCodeNumber
+                    }
+                    else {
+                        if zipCode.count == 5 {
+                    information[.zipCode] = zipCode
+                        }
+                        else{
+                            throw RegistrationError.zipCodeNumber
+                        }
+                    }
                     //check if a dob was given
                     guard let dob = requiredInformation[.dob] as? String else {
                         throw RegistrationError.dob
@@ -39,7 +95,36 @@ struct AmusementPark {
                     
                     //attempt to format the date
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "MM-dd-yyyy"
+                    dateFormatter.dateFormat = "MM/dd/yyyy"
+                    if let _ = dateFormatter.date(from: dob) {
+                        
+                        pass.rideAccess = [.allRides,.skipLines]
+                        pass.discountAccess[.food] = 10.0
+                        pass.discountAccess[.merchandise] = 20.0
+                        
+                    }
+                    else {
+                        throw RegistrationError.dobWrongFormat
+                    }
+                case .senior:
+                    //firstname and lastname
+                    guard let firstName = requiredInformation[.firstName] as? String else {
+                        throw RegistrationError.firstName
+                    }
+                    information[.firstName] = try firstName.isReasonableLength(.firstName)
+                    guard let lastName = requiredInformation[.lastName] as? String else {
+                        throw RegistrationError.lastName
+                    }
+                    information[.lastName] = try lastName.isReasonableLength(.lastName)
+                    //check if a dob was given
+                    guard let dob = requiredInformation[.dob] as? String else {
+                        throw RegistrationError.dob
+                    }
+                    information[.dob] = dob
+                    
+                    //attempt to format the date
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "MM/dd/yyyy"
                     if let dobDate = dateFormatter.date(from: dob) {
                         let calendar: NSCalendar! = NSCalendar(calendarIdentifier: .gregorian)
                         let now = Date()
@@ -77,7 +162,7 @@ struct AmusementPark {
                     
                     //attempt to format the date
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "MM-dd-yyyy"
+                    dateFormatter.dateFormat = "MM/dd/yyyy"
                     if let dobDate = dateFormatter.date(from: dob) {
                         let calendar: NSCalendar! = NSCalendar(calendarIdentifier: .gregorian)
                         let now = Date()
@@ -97,6 +182,8 @@ struct AmusementPark {
                     else {
                         throw RegistrationError.dobWrongFormat
                     }
+                    
+                    
                 default:
                     throw RegistrationError.subTypeNotFound
                 }
@@ -110,8 +197,8 @@ struct AmusementPark {
                     throw RegistrationError.dob
                 }
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MM-dd-yyyy"
-                if let dobDate = dateFormatter.date(from: dob) {
+                dateFormatter.dateFormat = "MM/dd/yyyy"
+                if let _ = dateFormatter.date(from: dob) {
                     information[.dob] = dob
                 }
                 else {
@@ -122,31 +209,47 @@ struct AmusementPark {
                 guard let firstName = requiredInformation[.firstName] as? String else {
                     throw RegistrationError.firstName
                 }
-                information[.firstName] = firstName
+                information[.firstName] = try firstName.isReasonableLength(.firstName)
                 guard let lastName = requiredInformation[.lastName] as? String else {
                     throw RegistrationError.lastName
                 }
-                information[.lastName] = lastName
+                information[.lastName] = try lastName.isReasonableLength(.lastName)
                 guard let streetAddress = requiredInformation[.streetAddress] as? String else {
                     throw RegistrationError.streetAddress
                 }
-                information[.streetAddress] = streetAddress
+                information[.streetAddress] = try streetAddress.isReasonableLength(.streetAddress)
                 guard let city = requiredInformation[.city] as? String else {
                     throw RegistrationError.city
                 }
-                information[.city] = city
+                information[.city] = try city.isReasonableLength(.city)
                 guard let state = requiredInformation[.state] as? String else {
                     throw RegistrationError.state
                 }
-                information[.state] = state
+                information[.state] = try state.isReasonableLength(.state)
                 guard let zipCode = requiredInformation[.zipCode] as? String else {
                     throw RegistrationError.zipCode
                 }
-                information[.zipCode] = zipCode
+                let zip:Int? = Int(zipCode)
+                if zip == nil {
+                    throw RegistrationError.zipCodeNumber
+                }
+                else {
+                    if zipCode.count == 5 {
+                        information[.zipCode] = zipCode
+                    }
+                    else{
+                        throw RegistrationError.zipCodeNumber
+                    }
+                }
                 guard let ssn = requiredInformation[.ssn] as? String else {
                     throw RegistrationError.ssn
                 }
+                if ssn.matchesSSN() {
                 information[.ssn] = ssn
+                }
+                else {
+                    throw RegistrationError.ssnInvalidFormat
+                }
                 
                 switch subType {
                     
@@ -178,10 +281,47 @@ struct AmusementPark {
                     pass.rideAccess = [.allRides]
                     pass.discountAccess[.food] = 25.0
                     pass.discountAccess[.merchandise] = 25.0
+                    
                     guard let managementTier = requiredInformation[.managementTier] as? String else {
                         throw RegistrationError.managementTier
                     }
                     information[.managementTier] = managementTier
+                case .contract:
+                    guard let projectNumberString = requiredInformation[.projectNumber] as? String else {
+                        throw RegistrationError.projectNumber
+                    }
+                    
+                    switch projectNumberString {
+                    case ProjectNumber.project1001.description():
+                        information[.projectNumber] = ProjectNumber.project1001.description()
+                        pass.areaAccess.append(.rideControl)
+                        
+                    case ProjectNumber.project1002.description():
+                        information[.projectNumber] = ProjectNumber.project1002.description()
+                        pass.areaAccess.append(.rideControl)
+                        pass.areaAccess.append(.maintenance)
+                        
+                    case ProjectNumber.project1003.description():
+                        information[.projectNumber] = ProjectNumber.project1003.description()
+                        pass.areaAccess.append(.rideControl)
+                        pass.areaAccess.append(.kitchen)
+                        pass.areaAccess.append(.maintenance)
+                        pass.areaAccess.append(.office)
+                        
+                    case ProjectNumber.project2001.description():
+                        information[.projectNumber] = ProjectNumber.project2001.description()
+                        pass.areaAccess.removeAll()
+                        pass.areaAccess.append(.office)
+                        
+                    case ProjectNumber.project2002.description():
+                        information[.projectNumber] = ProjectNumber.project2002.description()
+                        pass.areaAccess.removeAll()
+                        pass.areaAccess.append(.kitchen)
+                        pass.areaAccess.append(.maintenance)
+                        
+                    default:
+                        throw RegistrationError.projectNumber
+                    }
                     
                 default:
                     throw RegistrationError.subTypeNotFound
@@ -203,7 +343,35 @@ struct AmusementPark {
                 throw RegistrationError.lastName
             }
             information[.lastName] = lastName
-            pass.areaAccess.append(.kitchen)
+            guard let companyNameString = requiredInformation[.companyName] as? String else {
+                throw RegistrationError.companyName
+            }
+            switch companyNameString.lowercased() {
+            case CompanyName.acme.description().lowercased():
+                pass.areaAccess.removeAll()
+                pass.areaAccess.append(.kitchen)
+            case CompanyName.orkin.description().lowercased():
+                pass.areaAccess.append(.rideControl)
+                pass.areaAccess.append(.kitchen)
+            case CompanyName.fedex.description().lowercased():
+                pass.areaAccess.removeAll()
+                pass.areaAccess.append(.office)
+                pass.areaAccess.append(.maintenance)
+            case CompanyName.nwElectrical.description().lowercased():
+                pass.areaAccess.append(.rideControl)
+                pass.areaAccess.append(.kitchen)
+                pass.areaAccess.append(.maintenance)
+                pass.areaAccess.append(.office)
+            default:
+                throw RegistrationError.companyName
+            }
+            information[.companyName] = companyNameString
+            guard let dateOfVisit = requiredInformation[.dateOfVisit] as? String else {
+                throw RegistrationError.dateOfVisit
+            }
+            information[.dateOfVisit] = dateOfVisit
+            
+            
         }
         
         

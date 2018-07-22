@@ -7,8 +7,26 @@
 //
 
 import UIKit
-
+import GameKit
 class AccessTestingController: UIViewController {
+    
+    //sounds for the app
+    var buzzSound: SystemSoundID = 0
+    var dingSound: SystemSoundID = 1
+    
+    //correct sound
+    func playAccessDeniedSound() {
+        let pathToSoundFile = Bundle.main.path(forResource: "AccessDenied", ofType: "wav")
+        let soundURL = URL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL as CFURL, &buzzSound)
+        AudioServicesPlaySystemSound(buzzSound)
+    }
+    func playAccessGrantedSound() {
+        let pathToSoundFile = Bundle.main.path(forResource: "AccessGranted", ofType: "wav")
+        let soundURL = URL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL as CFURL, &dingSound)
+        AudioServicesPlaySystemSound(dingSound)
+    }
     
     @IBOutlet weak var fullnameLabel: UILabel!
     @IBOutlet weak var levelOfAccessLabel: UILabel!
@@ -27,28 +45,59 @@ class AccessTestingController: UIViewController {
     @IBOutlet weak var testResultsLabel: UILabel!
     @IBAction func areaAccessButton(_ sender: Any) {
         if let entrant = entrant {
-            var testResults = ""
+            if entrant.pass.areaAccess.count > 0 {
+            var accessGrantedTestResults = ""
+            var accessDeniedTestResults = ""
             //try entering the park using the swipe method
             var result = entrant.swipePass(.areaAccess, kioskArea: .amusement)
-            testResults += result.message
+            if result.result {
+            accessGrantedTestResults += (accessGrantedTestResults != "" ? ", " : "") + result.message
+            }
+            else {
+                accessDeniedTestResults += (accessDeniedTestResults != "" ? ", " : "") + result.message
+            }
             
             //try entering the kitchen
             result = entrant.swipePass(.areaAccess, kioskArea: .kitchen)
-            testResults += result.message
+            if result.result {
+                accessGrantedTestResults += (accessGrantedTestResults != "" ? ", " : "") + result.message
+            }
+            else {
+                accessDeniedTestResults += (accessDeniedTestResults != "" ? ", " : "") + result.message
+            }
             
             //try accessing maintenance area
             result = entrant.swipePass(.areaAccess, kioskArea: .maintenance)
-            testResults += result.message
+            if result.result {
+                accessGrantedTestResults += (accessGrantedTestResults != "" ? ", " : "") + result.message
+            }
+            else {
+                accessDeniedTestResults += (accessDeniedTestResults != "" ? ", " : "") + result.message
+            }
             
             //try accessing office area
             result = entrant.swipePass(.areaAccess, kioskArea: .office)
-            testResults += result.message
+            if result.result {
+                accessGrantedTestResults += (accessGrantedTestResults != "" ? ", " : "") + result.message
+            }
+            else {
+                accessDeniedTestResults += (accessDeniedTestResults != "" ? ", " : "") + result.message
+            }
             
             //try accessing ride controls area
             result = entrant.swipePass(.areaAccess, kioskArea: .rideControl)
-            testResults += result.message
+            if result.result {
+                accessGrantedTestResults += (accessGrantedTestResults != "" ? ", " : "") + result.message
+            }
+            else {
+                accessDeniedTestResults += (accessDeniedTestResults != "" ? ", " : "") + result.message
+            }
             
-            testResultsLabel.text = testResults
+            testResultsLabel.text = "Access Granted To: " + accessGrantedTestResults + "\nAccess Denied To: " + accessDeniedTestResults
+            }
+            else {
+                testResultsLabel.text = "Access Denied. Please see front attendance."
+            }
         }
     }
     
@@ -56,14 +105,17 @@ class AccessTestingController: UIViewController {
         if let entrant = entrant {
             var testResults = ""
             //try riding a ride
-            var result = entrant.swipePass(.rideAccess, kioskArea: nil)
+            let result = entrant.swipePass(.rideAccess, kioskArea: nil)
             testResults += result.message
-            
-            //swipe again to test 5 seconds between possible scanning
-            //result = entrant.swipePass(.rideAccess, kioskArea: nil)
-            //testResults += result.message
-            
+    
             testResultsLabel.text = testResults
+            
+            if result.result {
+                playAccessGrantedSound()
+            }
+            else{
+                playAccessDeniedSound()
+            }
         }
         
     }
@@ -75,6 +127,12 @@ class AccessTestingController: UIViewController {
             let result = entrant.swipePass(.discountAccess, kioskArea: nil)
             testResults += result.message
             testResultsLabel.text = testResults
+            if result.result {
+                playAccessGrantedSound()
+            }
+            else{
+                playAccessDeniedSound()
+            }
         }
         
     }
@@ -99,7 +157,7 @@ class AccessTestingController: UIViewController {
                 levelOfAccessLabel.text = ""
             }
         }
-        
+
         //set the access description label based on the type/subtype of entrant
         accessDescriptionLabel.text = entrant.entrantAccessDescription()
         

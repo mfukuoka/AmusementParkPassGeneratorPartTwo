@@ -8,11 +8,14 @@
 
 import UIKit
 
+
 class ViewController: UIViewController {
     
     //used to keep track of the current type/sub type selected
     var currentType: EntrantType = .guest
     var currentSubType: EntrantSubType? = .child
+    //work around for following project 5 mockup to closely
+    var currentManagementTier: ManagementTier?
     
     //Menu Button Entrant Type
     @IBOutlet weak var guestButton: UIButton!
@@ -37,16 +40,26 @@ class ViewController: UIViewController {
                 managerButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 vendorButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeOneButton.setTitle("Child", for: .normal)
-                subTypeTwoButton.setTitle("Adult", for: .normal)
+                subTypeTwoButton.setTitle("Classic", for: .normal)
                 subTypeThreeButton.setTitle("Senior", for: .normal)
                 subTypeFourButton.setTitle("VIP", for: .normal)
+                subTypeFiveButton.setTitle("Season", for: .normal)
+                subTypeOneButton.isEnabled = true
+                subTypeTwoButton.isEnabled = true
+                subTypeThreeButton.isEnabled = true
+                subTypeFourButton.isEnabled = true
+                subTypeFourButton.isHidden = false
+                subTypeFiveButton.isEnabled = true
+                subTypeFiveButton.isHidden = false
                 subTypeOneButton.setTitleColor(.white, for: .normal)
                 subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeFiveButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 setScreenInputFor(.guest, .child)
                 currentType = .guest
                 currentSubType = .child
+                currentManagementTier = nil
                 
             case typeButton.Employee.hashValue:
                 guestButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
@@ -57,26 +70,41 @@ class ViewController: UIViewController {
                 subTypeTwoButton.setTitle("Ride Services", for: .normal)
                 subTypeThreeButton.setTitle("Maintenance", for: .normal)
                 subTypeFourButton.setTitle("Contract", for: .normal)
+                subTypeOneButton.isEnabled = true
+                subTypeTwoButton.isEnabled = true
+                subTypeThreeButton.isEnabled = true
+                subTypeFourButton.isEnabled = true
+                subTypeFourButton.isHidden = false
+                subTypeFiveButton.isHidden = true
                 subTypeOneButton.setTitleColor(.white, for: .normal)
                 subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeFiveButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 setScreenInputFor(.employee, .foodService)
                 currentType = .employee
                 currentSubType = .foodService
+                currentManagementTier = nil
 
             case typeButton.Manager.hashValue:
                 guestButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 employeeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 managerButton.setTitleColor(.white, for: .normal)
                 vendorButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
-                subTypeOneButton.setTitle("", for: .normal)
-                subTypeTwoButton.setTitle("", for: .normal)
-                subTypeThreeButton.setTitle("", for: .normal)
+                subTypeOneButton.setTitle("Shift Manager", for: .normal)
+                subTypeTwoButton.setTitle("General Manager", for: .normal)
+                subTypeThreeButton.setTitle("Senior Manager", for: .normal)
+                subTypeOneButton.isEnabled = true
+                subTypeTwoButton.isEnabled = true
+                subTypeThreeButton.isEnabled = true
                 subTypeFourButton.setTitle("", for: .normal)
+                subTypeFiveButton.setTitle("", for: .normal)
+                subTypeFourButton.isHidden = true
+                subTypeFiveButton.isHidden = true
                 setScreenInputFor(.employee, .manager)
                 currentType = .employee
                 currentSubType = .manager
+                currentManagementTier = .shiftManager
                 
             case typeButton.Vendor.hashValue:
                 guestButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
@@ -87,9 +115,16 @@ class ViewController: UIViewController {
                 subTypeTwoButton.setTitle("", for: .normal)
                 subTypeThreeButton.setTitle("", for: .normal)
                 subTypeFourButton.setTitle("", for: .normal)
+                subTypeFiveButton.setTitle("", for: .normal)
+                subTypeOneButton.isEnabled = false
+                subTypeTwoButton.isEnabled = false
+                subTypeThreeButton.isEnabled = false
+                subTypeFourButton.isEnabled = false
+                subTypeFiveButton.isEnabled = false
                 setScreenInputFor(.vendor, nil)
                 currentType = .vendor
                 currentSubType = nil
+                currentManagementTier = nil
     
                 
             default:
@@ -106,12 +141,14 @@ class ViewController: UIViewController {
         case Two
         case Three
         case Four
+        case Five
     }
     
     @IBOutlet weak var subTypeOneButton: UIButton!
     @IBOutlet weak var subTypeTwoButton: UIButton!
     @IBOutlet weak var subTypeThreeButton: UIButton!
     @IBOutlet weak var subTypeFourButton: UIButton!
+    @IBOutlet weak var subTypeFiveButton: UIButton!
     
     //Sub Type Menu Button Action
     @IBAction func subTypeMenuButton(_ sender: Any) {
@@ -123,25 +160,41 @@ class ViewController: UIViewController {
                 subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeFiveButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+
                 switch currentType {
                 case .employee:
+                    //set managment tier if manager button is selected. otherwise set employee type
+                    if currentSubType == .manager {
+                        currentManagementTier = .shiftManager
+                    }
+                    else {
                     setScreenInputFor(.employee, .foodService)
                     currentSubType = .foodService
+                    }
                 case .guest:
                     setScreenInputFor(.guest, .child)
                     currentSubType = .child
                 default:
                     fatalError()
                 }
+                
             case subTypeButton.Two.hashValue:
                 subTypeOneButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeTwoButton.setTitleColor(.white, for: .normal)
                 subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeFiveButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 switch currentType {
                 case .employee:
+                    //set managment tier if manager button is selected. otherwise set employee type
+                    if currentSubType == .manager {
+                        currentManagementTier = .generalManager
+                    }
+                    else {
                     setScreenInputFor(.employee, .rideService)
                     currentSubType = .rideService
+                    }
                 case .guest:
                     setScreenInputFor(.guest, .classic)
                     currentSubType = .classic
@@ -153,10 +206,17 @@ class ViewController: UIViewController {
                 subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeThreeButton.setTitleColor(.white, for: .normal)
                 subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeFiveButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 switch currentType {
                 case .employee:
+                    //set managment tier if manager button is selected. otherwise set employee type
+                    if currentSubType == .manager {
+                        currentManagementTier = .seniorManager
+                    }
+                    else {
                     setScreenInputFor(.employee, .maintenance)
                     currentSubType = .maintenance
+                    }
                 case .guest:
                     setScreenInputFor(.guest, .senior)
                     currentSubType = .senior
@@ -168,6 +228,7 @@ class ViewController: UIViewController {
                 subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 subTypeFourButton.setTitleColor(.white, for: .normal)
+                subTypeFiveButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 switch currentType {
                 case .employee:
                     setScreenInputFor(.employee, .contract)
@@ -175,6 +236,22 @@ class ViewController: UIViewController {
                 case .guest:
                     setScreenInputFor(.guest, .vip)
                     currentSubType = .vip
+                default:
+                    fatalError()
+                }
+            case subTypeButton.Five.hashValue:
+                subTypeOneButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeFiveButton.setTitleColor(.white, for: .normal)
+                switch currentType {
+                case .employee:
+                    setScreenInputFor(.employee, .contract)
+                    currentSubType = .contract
+                case .guest:
+                    setScreenInputFor(.guest, .season)
+                    currentSubType = .season
                 default:
                     fatalError()
                 }
@@ -195,7 +272,6 @@ class ViewController: UIViewController {
         }
         if let lastName = lastNameTextField.text {
             requiredInformation[.lastName] = lastName
-            
         }
         if let streetAddress = streetAddressTextField.text, streetAddress.count > 0  {
             requiredInformation[.streetAddress] = streetAddress
@@ -215,9 +291,35 @@ class ViewController: UIViewController {
         if let dob = dobTextField.text, dob.count > 0  {
             requiredInformation[.dob] = dob
         }
-        requiredInformation[.managementTier] = "Shift Manager"
-            //companyTextField.text = ""
-            //projectNumberTextField.text = ""
+        if let projectNumber = projectNumberTextField.text, projectNumber.count > 0 {
+            requiredInformation[.projectNumber] = projectNumber
+        }
+        //company name
+        if let companyName = companyTextField.text, companyName.count > 0 {
+            requiredInformation[.companyName] = companyName
+        }
+        //date of visit
+        let now = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        if let now = dateFormatter.date(from: dateFormatter.string(from: now)) {
+            requiredInformation[.dateOfVisit] = dateFormatter.string(from: now)
+        }
+
+        //managementTier
+        if let currentManagementTier = currentManagementTier {
+            switch currentManagementTier {
+            case .shiftManager:
+                requiredInformation[.managementTier] = ManagementTier.shiftManager.description()
+            case .generalManager:
+                requiredInformation[.managementTier] = ManagementTier.generalManager.description()
+            case .seniorManager:
+                requiredInformation[.managementTier] = ManagementTier.seniorManager.description()
+                
+            }
+            
+        }
+
        
         //register a entrant
         do {
@@ -239,7 +341,7 @@ class ViewController: UIViewController {
             case .dobNotOverSixtyFiveYearsOld:
                 showAlertWith(title: "Registration Error", message: "You must be 65 years or older to be a senior guest.")
             case .dobWrongFormat:
-                showAlertWith(title: "Registration Error", message: "Date must be in MM-dd-yyyy format.")
+                showAlertWith(title: "Registration Error", message: "Date must be in MM/dd/yyyy format.")
             case .firstName:
                 showAlertWith(title: "Registration Error", message: "Please provide a first name")
             case .lastName:
@@ -252,12 +354,37 @@ class ViewController: UIViewController {
                 showAlertWith(title: "Registration Error", message: "Please provide a state")
             case .zipCode:
                 showAlertWith(title: "Registration Error", message: "Please provide a zipcode")
+            case .zipCodeNumber:
+                showAlertWith(title: "Registration Error", message: "Zipcode needs to be a five digit number.")
             case .ssn:
                 showAlertWith(title: "Registration Error", message: "Please provide a social security number")
-            case .managementTier:
-                showAlertWith(title: "Registration Error", message: "Please provide a management tier")
+            case .ssnInvalidFormat:
+                showAlertWith(title: "Registration Error", message: "Please provide a social security number in the format ###-##-####")
             case .subTypeNotFound:
                 showAlertWith(title: "Registration Error", message: "The provided subtype has no matching type")
+            case .projectNumber:
+                showAlertWith(title: "Registration Error", message: "The project wasn't found. Refer to Entrant Access Rules.")
+            case .managementTier:
+                showAlertWith(title: "Registration Error", message: "Management Tier wasn't provided. Refer to Business Rules Matrix.")
+            case .companyName:
+               showAlertWith(title: "Registration Error", message: "Company Name wasn't found. Refer to Entrant Access Rules.")
+            case .dateOfVisit:
+                showAlertWith(title: "Registration Error", message: "Date of visit wasn't provided.")
+            case .fieldTooLong(let field, let limit):
+                switch field {
+                case .firstName:
+                    showAlertWith(title: "Registration Error", message: "First name is too long. Must be \(limit) characters or less.")
+                case .lastName:
+                    showAlertWith(title: "Registration Error", message: "Last Name is too long. Must be \(limit) characters or less.")
+                case .streetAddress:
+                    showAlertWith(title: "Registration Error", message: "Street Address is too long. Must be \(limit) characters or less.")
+                case .city:
+                    showAlertWith(title: "Registration Error", message: "City is too long. Must be \(limit) characters or less.")
+                case .state:
+                    showAlertWith(title: "Registration Error", message: "State is too long. Must be \(limit) characters or less.")
+                default:
+                    fatalError()
+                }
             case .verbose(let message):
                 showAlertWith(title: "Error", message: message)
             }
@@ -296,7 +423,7 @@ class ViewController: UIViewController {
                 streetAddressTextField.text = "123 Street"
                 cityTextField.text = "New York"
                 stateTextField.text = "NY"
-                zipCodeTextField.text = "123456"
+                zipCodeTextField.text = "12345"
                 dobTextField.text = "01/01/1971"
                 ssnTextField.text = "123-12-1234"
             }
@@ -308,20 +435,20 @@ class ViewController: UIViewController {
                 streetAddressTextField.text = "123 Street"
                 cityTextField.text = "New York"
                 stateTextField.text = "NY"
-                zipCodeTextField.text = "123456"
+                zipCodeTextField.text = "12345"
                 dobTextField.text = "01/01/1971"
                 ssnTextField.text = "123-12-1234"
                 //MARK: management tier needs implemented. Mockups don't show a textfield. Watch project again.
             }
             if currentSubType == .contract {
                 companyTextField.text = ""
-                projectNumberTextField.text = "Project 0x"
+                projectNumberTextField.text = "1001"
                 firstNameTextField.text = "Masanobu"
                 lastNameTextField.text = "Fukuoka"
                 streetAddressTextField.text = "123 Street"
                 cityTextField.text = "New York"
                 stateTextField.text = "NY"
-                zipCodeTextField.text = "123456"
+                zipCodeTextField.text = "12345"
                 dobTextField.text = "01/01/1971"
                 ssnTextField.text = "123-12-1234"
             }
@@ -331,7 +458,7 @@ class ViewController: UIViewController {
                 let childsAge = calendar.date(byAdding: .year, value: -4, to: Date())
                 if let childsAge = childsAge {
                     let dateFormatterPrint = DateFormatter()
-                    dateFormatterPrint.dateFormat = "MM-dd-yyyy"
+                    dateFormatterPrint.dateFormat = "MM/dd/yyyy"
                     dobTextField.text = dateFormatterPrint.string(from: childsAge)
                 }
             }
@@ -349,13 +476,31 @@ class ViewController: UIViewController {
                 let seniorsAge = calendar.date(byAdding: .year, value: -65, to: Date())
                 if let seniorsAge = seniorsAge {
                     let dateFormatterPrint = DateFormatter()
-                    dateFormatterPrint.dateFormat = "MM-dd-yyyy"
+                    dateFormatterPrint.dateFormat = "MM/dd/yyyy"
                     dobTextField.text = dateFormatterPrint.string(from: seniorsAge)
+                }
+            }
+            if currentSubType == .season {
+                companyTextField.text = ""
+                projectNumberTextField.text = ""
+                firstNameTextField.text = "Masanobu"
+                lastNameTextField.text = "Fukuoka"
+                streetAddressTextField.text = "123 Street"
+                cityTextField.text = "New York"
+                stateTextField.text = "NY"
+                zipCodeTextField.text = "12345"
+                ssnTextField.text = ""
+                let calendar = Calendar.current
+                let entrantAge = calendar.date(byAdding: .year, value: -30, to: Date())
+                if let entrantAge = entrantAge {
+                    let dateFormatterPrint = DateFormatter()
+                    dateFormatterPrint.dateFormat = "MM/dd/yyyy"
+                    dobTextField.text = dateFormatterPrint.string(from: entrantAge)
                 }
             }
         case .vendor:
             projectNumberTextField.text = ""
-            companyTextField.text = "Sysco Food Products"
+            companyTextField.text = "Acme"
             firstNameTextField.text = "Masanobu"
             lastNameTextField.text = "Fukuoka"
             streetAddressTextField.text = ""
@@ -364,7 +509,6 @@ class ViewController: UIViewController {
             zipCodeTextField.text = ""
             dobTextField.text = "01/01/1971"
             ssnTextField.text = ""
-            let now = Date()
             //MARK: date of visit, store this is Entrant object.
             
         }
@@ -432,6 +576,17 @@ class ViewController: UIViewController {
                     disable(cityTextField)
                     disable(stateTextField)
                     disable(zipCodeTextField)
+                    enable(dobTextField)
+                    disable(ssnTextField)
+                case .season:
+                    disable(projectNumberTextField)
+                    disable(companyTextField)
+                    enable(firstNameTextField)
+                    enable(lastNameTextField)
+                    enable(streetAddressTextField)
+                    enable(cityTextField)
+                    enable(stateTextField)
+                    enable(zipCodeTextField)
                     enable(dobTextField)
                     disable(ssnTextField)
                 default:
@@ -553,203 +708,20 @@ class ViewController: UIViewController {
         subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
         subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
         subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+        subTypeFiveButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
         subTypeOneButton.setTitle("Child", for: .normal)
-        subTypeTwoButton.setTitle("Adult", for: .normal)
+        subTypeTwoButton.setTitle("Classic", for: .normal)
         subTypeThreeButton.setTitle("Senior", for: .normal)
         subTypeFourButton.setTitle("VIP", for: .normal)
+        subTypeFiveButton.setTitle("Season", for: .normal)
         setScreenInputFor(.guest, .child)
 
-        
-        //classic guest
-        /*if let entrant = testCaseRegisterEntrant(type: .guest, subType: .classic, requiredInformation: [ : ])  {
-            testCaseSwipeAtAllKiosks(entrant)
-        }
-        else{
-            print("An Entrant wasn't created. Please see error above.\n--------------------------------\n")
-        }*/
-        
-        /*Test case for each entrant type
-         //vip guest
-         if let entrant = testCaseRegisterEntrant(type: .guest, subType: .vip, requiredInformation: [ : ])  {
-         testCaseSwipeAtAllKiosks(entrant)
-         }
-         else{
-         print("An Entrant wasn't created. Please see error above.\n--------------------------------\n")
-         }
-         
-         //child guest no date of birth
-         if let entrant = testCaseRegisterEntrant(type: .guest, subType: .child, requiredInformation: [ : ])  {
-         testCaseSwipeAtAllKiosks(entrant)
-         }
-         else{
-         print("An Entrant wasn't created. Please see error above.\n--------------------------------\n")
-         }
-         //child with incorrect date of birth
-         if let entrant = testCaseRegisterEntrant(type: .guest, subType: .child, requiredInformation: [.dob : "1999/01/01"])  {
-         testCaseSwipeAtAllKiosks(entrant)
-         }
-         else{
-         print("An Entrant wasn't created. Please see error above.\n--------------------------------\n")
-         }
-         //child with correct date of birth
-         if let entrant = testCaseRegisterEntrant(type: .guest, subType: .child, requiredInformation: [.dob : "2015/01/01"])  {
-         testCaseSwipeAtAllKiosks(entrant)
-         }
-         else{
-         print("An Entrant wasn't created. Please see error above.\n--------------------------------\n")
-         }
-         
-         //used for passing entrant's information
-         //comment out a line to see error
-         var entrantInformation: [RequiredInformation : String] = [ : ]
-         entrantInformation[.dob] = "1971/01/01"
-         entrantInformation[.firstName] = "Frank"
-         entrantInformation[.lastName] = "Abagnale"
-         entrantInformation[.streetAddress] = "116 Bellevue Square"
-         entrantInformation[.city] = "Bellevue"
-         entrantInformation[.state] = "WA"
-         entrantInformation[.zipCode] = "98004"
-         entrantInformation[.ssn] = "555-55-5555"
-         
-         
-         //hourly employee ride services
-         if let entrant = testCaseRegisterEntrant(type: .employee, subType: .rideService, requiredInformation: entrantInformation)  {
-         testCaseSwipeAtAllKiosks(entrant)
-         }
-         else{
-         print("An Entrant wasn't created. Please see error above.\n--------------------------------\n")
-         }
-         
-         //hourly employee food services
-         if let entrant = testCaseRegisterEntrant(type: .employee, subType: .foodService, requiredInformation: entrantInformation)  {
-         testCaseSwipeAtAllKiosks(entrant)
-         }
-         else{
-         print("An Entrant wasn't created. Please see error above.\n--------------------------------\n")
-         }
-         
-         //hourly employee maintenance
-         if let entrant = testCaseRegisterEntrant(type: .employee, subType: .maintenance, requiredInformation: entrantInformation)  {
-         testCaseSwipeAtAllKiosks(entrant)
-         }
-         else{
-         print("An Entrant wasn't created. Please see error above.\n--------------------------------\n")
-         }
-         
-         //manager
-         entrantInformation[.managementTier] = "Shift Manager"
-         if let entrant = testCaseRegisterEntrant(type: .employee, subType: .manager, requiredInformation: entrantInformation)  {
-         testCaseSwipeAtAllKiosks(entrant)
-         }
-         else{
-         print("An Entrant wasn't created. Please see error above.\n--------------------------------\n")
-         }
-         */
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    //test case function for when a entrant arrives to the park and registers.
-    /*func testCaseRegisterEntrant(type: EntrantType, subType: EntrantSubType, requiredInformation: [RequiredInformation : String?]) -> Entrant? {
-        print("Registering a \(type) - \(subType)\n--------------------------------")
-        //register a entrant
-        do {
-            print("Registered Entrant Successfully!\n")
-            let entrant = try AmusementPark.registerEntrant(type, subType, requiredInformation: requiredInformation)
-            return entrant
-        }
-        catch let error as RegistrationError {
-            switch error {
-            case .dob:
-                print("You must provide a date of birth.")
-            case .dobUnderFiveYears:
-                print("You must be under 5 years old to be a child guest.")
-            case .firstName:
-                print("Please provide a first name")
-            case .lastName:
-                print("Please provide a last name")
-            case .streetAddress:
-                print("Please provide a street address")
-            case .city:
-                print("Please provide a city")
-            case .state:
-                print("Please provide a state")
-            case .zipCode:
-                print("Please provide a zipcode")
-            case .ssn:
-                print("Please provide a social security number")
-            case .managementTier:
-                print("Please provide a management tier")
-            case .subTypeNotFound:
-                print("The provided subtype has no matching type")
-            case .verbose(let message):
-                print(message)
-            }
-        }
-        catch let error {
-            print(error)
-        }
-        
-        return nil
-    }
-    
-    func testCaseSwipeAtAllKiosks(_ entrant: Entrant){
-        print("testing \(entrant.type) - \(entrant.subType) swipe methods\n--------------------------------")
-        //try entering the park using the swipe method
-        var result = entrant.swipePass(.areaAccess, kioskArea: .amusement)
-        print("Enter Park Swipe: \(result.message)")
-        
-        //try entering the kitchen
-        result = entrant.swipePass(.areaAccess, kioskArea: .kitchen)
-        print("Enter Kitchen Swipe: \(result.message)")
-        
-        //try accessing maintenance area
-        result = entrant.swipePass(.areaAccess, kioskArea: .maintenance)
-        print("Maintenance worker Swipe: \(result.message)")
-        
-        //try accessing office area
-        result = entrant.swipePass(.areaAccess, kioskArea: .office)
-        print("Office worker Swipe: \(result.message)")
-        
-        //try accessing ride controls area
-        result = entrant.swipePass(.areaAccess, kioskArea: .rideControl)
-        print("Maintenance worker Swipe: \(result.message)")
-        
-        //try riding a ride
-        result = entrant.swipePass(.rideAccess, kioskArea: nil)
-        print("Ride A Ride Swipe: \(result.message)")
-        
-        //swipe again to test 5 seconds between possible scanning
-        result = entrant.swipePass(.rideAccess, kioskArea: nil)
-        print("Ride A Ride Swipe #2: \(result.message)")
-        
-        //try again in 6 seconds to demonstrate
-        trySwipeAgainAfter(seconds: 6, entrant: entrant)
-        
-        //purchase something and get a discount
-        result = entrant.swipePass(.discountAccess, kioskArea: nil)
-        print("Discount Swipe: \(result.message)")
-        
-        print("All swipe methods tested.\n--------------------------------\n")
-    }
-    
-    func trySwipeAgainAfter(seconds: Int, entrant: Entrant) {
-        // Converts a delay in seconds to nanoseconds as signed 64 bit integer
-        let delay = Int64(NSEC_PER_SEC * UInt64(seconds))
-        
-        // Calculates a time value to execute the method given current time and delay
-        let dispatchTime = DispatchTime.now() + Double(delay) / Double(NSEC_PER_SEC)
-        
-        DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
-            let  result = entrant.swipePass(.rideAccess, kioskArea: nil)
-            print("Swiped pass again: \(result.message)")
-        }
-    }
-    */
     
 }
 

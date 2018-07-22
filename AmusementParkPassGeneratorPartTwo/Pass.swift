@@ -8,25 +8,42 @@
 
 import Foundation
 
+//different types of discounts
 enum DiscountAccessType {
     case food
     case merchandise
 }
 
+//different types of ride privledges
 enum RideAccessType {
     case allRides
     case skipLines
 }
 
+//different areas of the park
 enum AreaAccessType {
     case amusement
     case kitchen
     case rideControl
     case maintenance
     case office
+    func description() -> String {
+        switch self {
+        case .amusement:
+            return "Amusement"
+        case .kitchen:
+            return "Kitchen"
+        case .rideControl:
+            return "Ride Control"
+        case .maintenance:
+            return "Maintenance"
+        case .office:
+            return "Office"
+        }
+    }
 }
 
-
+//a pass object that contains all areas allowed, ride privledges, and discounts. Anti double swipe prevention integrated into the object.
 class Pass {
     var areaAccess: [AreaAccessType]
     var rideAccess: [RideAccessType]?

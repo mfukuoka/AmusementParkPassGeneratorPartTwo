@@ -37,82 +37,85 @@ extension Entrant {
         switch type {
         //entrant swiped pass to enter an area
         case .areaAccess:
-            for access in self.pass.areaAccess {
-                if let kioskArea = kioskArea {
+            if let kioskArea = kioskArea {
+                //go through the entrants access levels and determine if they are granted or denied
+                for access in self.pass.areaAccess {
+                    
                     switch access {
                     case .amusement:
                         if kioskArea == .amusement {
-                            return (true, "Access Granted. Enjoy the park!")
+                            return (true, AreaAccessType.amusement.description())
                         }
                     case .kitchen:
                         if kioskArea == .kitchen {
-                            return (true, "Access Granted to kitchen.")
+                            
+                            return (true, AreaAccessType.kitchen.description())
                         }
                     case .maintenance:
                         if kioskArea == .maintenance {
-                            return (true, "Access Granted to maintenance.")
+                            return (true, AreaAccessType.maintenance.description())
                         }
                     case .office:
                         if kioskArea == .office {
-                            return (true, "Access Granted to office")
+                            return (true, AreaAccessType.office.description())
                         }
                     case .rideControl:
                         if kioskArea == .rideControl {
-                            return (true, "Access Granted to ride control")
+                            return (true, AreaAccessType.rideControl.description())
                         }
                     }
                 }
+                //return for access denied string
+                return (false, kioskArea.description())
             }
-            return (false, "Access Denied. Please see front attendant.")
+
             
         //entrant swiped pass to ride a ride
         case .rideAccess:
-            var messageToRider = "Access Granted. Have Fun! "
+            var messageToRider = "Access Granted. Have Fun!"
             if let access = self.pass.rideAccess {
                 //check if they can skip lines
                 for access in access {
                     if access == .skipLines {
                         //vip member - let them skip the line and ride
-                        messageToRider += "VIP - Skip to the front. "
+                        messageToRider += "\nSkip All Ride Lines. "
                     }
                 }
                 for access in access {
                     if access == .allRides {
                         //check to see if we know the entrants birthday
                         if let dob = self.information[.dob] as String? {
-                            
                             //attempt to format the date
                             let dateFormatter = DateFormatter()
-                            dateFormatter.dateFormat = "yyyy-MM-dd"
+                            dateFormatter.dateFormat = "MM/dd/yyyy"
                             if let dobDate = dateFormatter.date(from: dob) {
-                                
+                                dateFormatter.dateFormat = "MM/dd"
                                 //check to see if the date is same as today
-                                if let nowDate = dateFormatter.date(from: dateFormatter.string(from: Date())) {
-                                    
-                                    if dobDate == nowDate {
-                                        if let firstName = self.information[.firstName] as String? {
-                                            messageToRider += " Happy Birthday \(firstName)!! "
-                                        }
-                                        else {
-                                            messageToRider += " Happy Birthday!! "
-                                        }
+                                if dateFormatter.string(from: dobDate) == dateFormatter.string(from: Date()) {
+                                    if let firstName = self.information[.firstName] as String? {
+                                        messageToRider += " Happy Birthday \(firstName)!! "
+                                    }
+                                    else {
+                                        messageToRider += " Happy Birthday!! "
                                     }
                                 }
+                                
                             }
                         }
                         //prevent a second swipe within 5 seconds.
                         if !self.pass.recentlySwiped {
-                        self.pass.preventSecondSwipe(seconds: 5)
-                        //let them ride the ride
-                        return (true, messageToRider)
+                            self.pass.preventSecondSwipe(seconds: 5)
+                            //let them ride the ride
+                            return (true, messageToRider)
                         }
                         else {
-                            return (true, "Error: Pass was recently scanned. Only one rider per pass.")
+                            return (false, "Error: Pass was recently scanned. Only one rider per pass.")
                         }
                     }
-
+                    
                 }
             }
+            
         //entrant swiped pass to recieve a discount
         case .discountAccess:
             var messageToEntrant = ""
@@ -123,7 +126,7 @@ extension Entrant {
                 messageToEntrant += " merchandise discount: \(discount)"
             }
             if messageToEntrant == "" {
-                messageToEntrant = "Try becoming a VIP member to recieve a discount!"
+                return (false, "Try becoming a VIP member to recieve a discount!")
             }
             return (true, messageToEntrant)
         }
@@ -137,7 +140,20 @@ extension Entrant {
     func entrantAccessDescription() -> String {
         var description = ""
         var counter = 0
+        if let dateOfVisit = self.information[.dateOfVisit] {
+            description += "Date Visited: \(dateOfVisit)\n"
+        }
         
+        //add company if there is one
+        if let company = self.information[.companyName] {
+            description += "Company: \(company)\n"
+        }
+        //add project if there is one
+        if let project = self.information[.projectNumber] {
+            description += "Project: \(project)\n"
+        }
+        
+        //add entrants areas of access
         for area in self.pass.areaAccess {
             switch area {
             case .amusement:
@@ -154,7 +170,7 @@ extension Entrant {
             counter += 1
         }
         if counter > 0 {
-        description += "\n"
+            description += "\n"
         }
         
         counter = 0
@@ -164,12 +180,12 @@ extension Entrant {
                 case .allRides:
                     description += (counter == 0 ? "•" : ",") + " Access All Rides"
                 case .skipLines:
-                     description += (counter == 0 ? "•" : ",") + " Skip All Ride Lines"
+                    description += (counter == 0 ? "•" : ",") + " Skip All Ride Lines"
                 }
                 counter += 1
             }
             if counter > 0 {
-            description += "\n"
+                description += "\n"
             }
         }
         counter = 0
@@ -183,7 +199,7 @@ extension Entrant {
             counter += 1
         }
         if counter > 0 {
-        description += "\n"
+            description += "\n"
         }
         
         
@@ -205,13 +221,21 @@ extension Entrant {
             case .maintenance:
                 description =  "Maintenance "
             case .manager:
-                description =  "Manager "
+                //return the tier of the manager instead
+                if let tier = self.information[.managementTier] {
+                return tier
+                }
+                else {
+                    fatalError()
+                }
             case .rideService:
                 description =  "Ride Services "
             case .senior:
                 description =  "Senior "
             case .vip:
                 description =  "VIP "
+            case .season:
+                description = "Season Pass "
             }
         }
         switch self.type {
@@ -242,6 +266,7 @@ enum EntrantSubType {
     case maintenance
     case contract
     case manager
+    case season
 }
 
 enum RequiredInformation {
@@ -254,6 +279,64 @@ enum RequiredInformation {
     case zipCode
     case ssn
     case managementTier
+    case projectNumber
+    case companyName
+    case dateOfVisit
+}
+enum ProjectNumber {
+    case project1001
+    case project1002
+    case project1003
+    case project2001
+    case project2002
+    func description() -> String {
+        switch self {
+        case .project1001:
+            return "1001"
+        case .project1002:
+            return "1002"
+        case .project1003:
+            return "1003"
+        case .project2001:
+            return "2001"
+        case .project2002:
+            return "2001"
+        }
+    }
+}
+enum ManagementTier {
+    case shiftManager
+    case generalManager
+    case seniorManager
+    func description() -> String {
+        switch self {
+        case .shiftManager:
+            return "Shift Manager"
+        case .generalManager:
+            return "General Manager"
+        case .seniorManager:
+            return "Senior Manager"
+        }
+    }
+}
+enum CompanyName {
+    case acme
+    case orkin
+    case fedex
+    case nwElectrical
+    func description() -> String {
+        switch self {
+        case .acme:
+            return "Acme"
+        case .orkin:
+            return "Orkin"
+        case .fedex:
+            return "Fedex"
+        case .nwElectrical:
+            return "NW Electrical"
+        }
+    }
+    
 }
 enum RegistrationError: Error {
     case dob
@@ -266,8 +349,14 @@ enum RegistrationError: Error {
     case city
     case state
     case zipCode
+    case zipCodeNumber
     case ssn
+    case ssnInvalidFormat
+    case projectNumber
+    case companyName
+    case dateOfVisit
     case managementTier
+    case fieldTooLong(field: RequiredInformation, limit: String)
     case subTypeNotFound
     case verbose(message: String)
 }

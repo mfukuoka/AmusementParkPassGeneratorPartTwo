@@ -8,8 +8,9 @@
 
 import Foundation
 
-//used for checking social security number
+//extension for easier error reporting below
 extension String {
+    //used for checking social security number
     func matchesSSN() -> Bool {
         return self.range(of: "\\d{3}-\\d{2}-\\d{4}", options: .regularExpression, range: nil, locale: nil) != nil
     }
@@ -40,18 +41,19 @@ extension String {
 
 struct AmusementPark {
     
-    //register an entrant
+    //Business Rules
+    //register an entrant using the supplied required information.  If there is something missing or invalid throw a RegistrationError
     static func registerEntrant(_ type: EntrantType, _ subType: EntrantSubType?, requiredInformation: [RequiredInformation : String?]) throws -> Entrant {
         
         let pass = Pass(areaAccess: [.amusement], rideAccess: nil, discountAccess: [:]) //everyabody getta ride a ride
         var information: [RequiredInformation : String] = [ : ]
         if let subType = subType {
-            //type is a guest
+            //MARK: Guest Type
             if type == .guest {
-                
-                //classic guest
                 switch subType {
+                //MARK: Season Guest
                 case .season:
+                    //check for required information and make sure it isn't empty and is of a reasonable length.
                     guard let firstName = requiredInformation[.firstName] as? String else {
                         throw RegistrationError.firstName
                     }
@@ -87,13 +89,12 @@ struct AmusementPark {
                             throw RegistrationError.zipCodeNumber
                         }
                     }
-                    //check if a dob was given
                     guard let dob = requiredInformation[.dob] as? String else {
                         throw RegistrationError.dob
                     }
                     information[.dob] = dob
                     
-                    //attempt to format the date
+                    //check if the date is valid
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "MM/dd/yyyy"
                     if let _ = dateFormatter.date(from: dob) {
@@ -106,8 +107,8 @@ struct AmusementPark {
                     else {
                         throw RegistrationError.dobWrongFormat
                     }
+                //MARK: Senior Guest
                 case .senior:
-                    //firstname and lastname
                     guard let firstName = requiredInformation[.firstName] as? String else {
                         throw RegistrationError.firstName
                     }
@@ -122,7 +123,7 @@ struct AmusementPark {
                     }
                     information[.dob] = dob
                     
-                    //attempt to format the date
+                    //makes sure date is valid and they are 65 or older
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "MM/dd/yyyy"
                     if let dobDate = dateFormatter.date(from: dob) {
@@ -146,13 +147,15 @@ struct AmusementPark {
                     else {
                         throw RegistrationError.dobWrongFormat
                     }
-                    
+                //MARK: Classic Guest
                 case .classic:
                     pass.rideAccess = [.allRides]
+                //MARK: VIP Guest
                 case .vip:
                     pass.rideAccess = [.allRides, .skipLines]
                     pass.discountAccess[.food] = 10.0
                     pass.discountAccess[.merchandise] = 20.0
+                //MARK: Child Guest
                 case .child:
                     //check if a dob was given
                     guard let dob = requiredInformation[.dob] as? String else {
@@ -160,7 +163,7 @@ struct AmusementPark {
                     }
                     information[.dob] = dob
                     
-                    //attempt to format the date
+                    //makes sure date is in the right format and that they are 5 or younger
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "MM/dd/yyyy"
                     if let dobDate = dateFormatter.date(from: dob) {
@@ -190,7 +193,7 @@ struct AmusementPark {
                 
                 
             }
-            //type is an employee
+            //MARK: Employee
             if type == .employee {
                 
                 guard let dob = requiredInformation[.dob] as? String else {
@@ -204,7 +207,6 @@ struct AmusementPark {
                 else {
                     throw RegistrationError.dobWrongFormat
                 }
-                
                 
                 guard let firstName = requiredInformation[.firstName] as? String else {
                     throw RegistrationError.firstName
@@ -231,6 +233,7 @@ struct AmusementPark {
                 guard let zipCode = requiredInformation[.zipCode] as? String else {
                     throw RegistrationError.zipCode
                 }
+                //make sure zip is a number
                 let zip:Int? = Int(zipCode)
                 if zip == nil {
                     throw RegistrationError.zipCodeNumber
@@ -246,6 +249,7 @@ struct AmusementPark {
                 guard let ssn = requiredInformation[.ssn] as? String else {
                     throw RegistrationError.ssn
                 }
+                //regex string extension. such wow.
                 if ssn.matchesSSN() {
                 information[.ssn] = ssn
                 }
@@ -254,19 +258,19 @@ struct AmusementPark {
                 }
                 
                 switch subType {
-                    
+                //MARK: Food Service
                 case .foodService:
                     pass.areaAccess.append(.kitchen)
                     pass.rideAccess = [.allRides]
                     pass.discountAccess[.food] = 15.0
                     pass.discountAccess[.merchandise] = 25.0
-                    
+                //MARK: Ride Service
                 case .rideService:
                     pass.areaAccess.append(.rideControl)
                     pass.rideAccess = [.allRides]
                     pass.discountAccess[.food] = 15.0
                     pass.discountAccess[.merchandise] = 25.0
-                    
+                //MARK: Maintenance Service
                 case .maintenance:
                     pass.areaAccess.append(.kitchen)
                     pass.areaAccess.append(.rideControl)
@@ -274,7 +278,7 @@ struct AmusementPark {
                     pass.rideAccess = [.allRides]
                     pass.discountAccess[.food] = 15.0
                     pass.discountAccess[.merchandise] = 25.0
-                    
+                //MARK: Manager Service
                 case .manager:
                     pass.areaAccess.append(.kitchen)
                     pass.areaAccess.append(.rideControl)
@@ -288,11 +292,12 @@ struct AmusementPark {
                         throw RegistrationError.managementTier
                     }
                     information[.managementTier] = managementTier
+                //MARK: Contract
                 case .contract:
                     guard let projectNumberString = requiredInformation[.projectNumber] as? String else {
                         throw RegistrationError.projectNumber
                     }
-                    
+                    //make sure a project number is one from the entrant access rules
                     switch projectNumberString {
                     case ProjectNumber.project1001.description():
                         information[.projectNumber] = ProjectNumber.project1001.description()
@@ -331,6 +336,7 @@ struct AmusementPark {
                 
             }
         }
+        //MARK: Vendor
         if type == .vendor {
             guard let dob = requiredInformation[.dob] as? String else {
                 throw RegistrationError.dob
@@ -354,6 +360,7 @@ struct AmusementPark {
             guard let companyNameString = requiredInformation[.companyName] as? String else {
                 throw RegistrationError.companyName
             }
+            //make sure the company is from the entrant access rules
             switch companyNameString.lowercased() {
             case CompanyName.acme.description().lowercased():
                 pass.areaAccess.removeAll()

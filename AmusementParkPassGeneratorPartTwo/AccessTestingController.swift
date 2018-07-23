@@ -8,6 +8,8 @@
 
 import UIKit
 import GameKit
+
+//View controller for the access control testing screen.
 class AccessTestingController: UIViewController {
     
     //sounds for the app
@@ -32,7 +34,7 @@ class AccessTestingController: UIViewController {
     @IBOutlet weak var levelOfAccessLabel: UILabel!
     @IBOutlet weak var accessDescriptionLabel: UILabel!
     
-    
+    //entrant passed from superview
     var entrant: Entrant?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +45,7 @@ class AccessTestingController: UIViewController {
         
     }
     
+    //build a string to show areas that are accessible and those that aren't allowed by the entrant type/subtype
     @IBOutlet weak var testResultsLabel: UILabel!
     @IBAction func areaAccessButton(_ sender: Any) {
         if let entrant = entrant {
@@ -103,7 +106,7 @@ class AccessTestingController: UIViewController {
             }
         }
     }
-    
+    //Try riding a ride! Play a sound depending on access granted or denied
     @IBAction func rideAccessButton(_ sender: Any) {
         if let entrant = entrant {
             var testResults = ""
@@ -122,7 +125,7 @@ class AccessTestingController: UIViewController {
         }
         
     }
-    
+    //Getting some discounts so play a sound if its granted or denied. Treat yourself.
     @IBAction func discountAccessButton(_ sender: Any) {
         if let entrant = entrant {
             var testResults = ""
@@ -140,6 +143,7 @@ class AccessTestingController: UIViewController {
         
     }
     
+    //setup the screen with all our information 
     func setScreenFor(_ entrant: Entrant){
         
         //if the entrant has a fullname then show it

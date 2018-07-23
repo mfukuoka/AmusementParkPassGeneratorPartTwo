@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var managerButton: UIButton!
     @IBOutlet weak var vendorButton: UIButton!
     
+    //top level menu
     enum typeButton {
         case Guest
         case Employee
@@ -30,6 +31,7 @@ class ViewController: UIViewController {
         case Vendor
     }
     
+    //setup the top level menu depending on what was clicked
     @IBAction func typeMenuButton(_ sender: Any) {
         if let sender = sender as? UIButton {
             switch sender.tag {
@@ -268,7 +270,7 @@ class ViewController: UIViewController {
 
     }
     @IBAction func generatePass(_ sender: Any) {
-        //MARK: Check that all required information is being passed i.e. management type etc.
+        //MARK: Generate a pass after checking for all required information
         
         var requiredInformation: [RequiredInformation : String] = [ : ]
       
@@ -326,7 +328,7 @@ class ViewController: UIViewController {
         }
 
        
-        //register a entrant
+        //try register an entrant otherwise show an alert message
         do {
             let entrant = try AmusementPark.registerEntrant(currentType, currentSubType, requiredInformation: requiredInformation)
             //MARK: Pass entrant to testing screen for checking access levels.
@@ -399,6 +401,7 @@ class ViewController: UIViewController {
         }
     }
 
+    //alert message box for showing input validation errors.
     func showAlertWith(title: String, message: String, style: UIAlertControllerStyle = .alert){
         let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
         
@@ -408,6 +411,7 @@ class ViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
 
+    //populates the required information
     @IBAction func populateDataButton(_ sender: Any) {
         populateData()
     }
@@ -514,7 +518,6 @@ class ViewController: UIViewController {
             zipCodeTextField.text = ""
             dobTextField.text = "01/01/1971"
             ssnTextField.text = ""
-            //MARK: date of visit, store this is Entrant object.
             
         }
         
@@ -542,9 +545,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var zipCodeLabel: UILabel!
 
     
+    //setup all the inputs depending on the type/subtype selected
     func setScreenInputFor(_ type: EntrantType, _ subType: EntrantSubType?) {
-        //clear inputs
-        //MARK: rather than clear inputs when switching types and subtypes it should carry over data(text.count>0) that is allowed for that type/subtype
         //go through the possible type/subtype combinations
         if let subType = subType {
             if type == .guest {
@@ -645,7 +647,7 @@ class ViewController: UIViewController {
             }
         }
         
-        //vendors have a nil subtype
+        //vendors have a nil subtype. I would have preferred one type of "entrant id".
         if type == .vendor {
             disable(projectNumberTextField)
             enable(companyTextField)
@@ -660,7 +662,7 @@ class ViewController: UIViewController {
         }
     }
     
-    //used for enable/disable plus coloring
+    //used for enable/disable plus coloring of a textfield
     func disable(_ textField: UITextField){
         textField.isEnabled = false
         textField.text = ""
@@ -673,6 +675,7 @@ class ViewController: UIViewController {
 
 
     //when the keyboard is shown then update the infostackview bottom constraint
+    //causes random constraint conflicts but hasn't caused issues. not sure why.
     @IBOutlet weak var infoStackViewBottom: NSLayoutConstraint!
 
     @objc func keyboardWillShow(_ notification: Notification){

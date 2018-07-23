@@ -250,6 +250,7 @@ extension Entrant {
     }
 }
 
+//MARK: Entrant Type's and Subtypes.
 enum EntrantType {
     case guest
     case employee
@@ -268,7 +269,7 @@ enum EntrantSubType {
     case manager
     case season
 }
-
+//MARK: Required Information
 enum RequiredInformation {
     case dob
     case firstName
@@ -283,6 +284,7 @@ enum RequiredInformation {
     case companyName
     case dateOfVisit
 }
+//MARK: Project Number, Management Tier, Company Name
 enum ProjectNumber {
     case project1001
     case project1002
@@ -338,6 +340,7 @@ enum CompanyName {
     }
     
 }
+//MARK: Registration Errors
 enum RegistrationError: Error {
     case dob
     case dobUnderFiveYears

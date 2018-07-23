@@ -42,6 +42,7 @@ class AccessTestingController: UIViewController {
         else { fatalError()}
         
     }
+    
     @IBOutlet weak var testResultsLabel: UILabel!
     @IBAction func areaAccessButton(_ sender: Any) {
         if let entrant = entrant {
@@ -93,7 +94,9 @@ class AccessTestingController: UIViewController {
                 accessDeniedTestResults += (accessDeniedTestResults != "" ? ", " : "") + result.message
             }
             
-            testResultsLabel.text = "Access Granted To: " + accessGrantedTestResults + "\nAccess Denied To: " + accessDeniedTestResults
+                //show access granted. denied access when there is something to show.
+                testResultsLabel.text = "Access Granted To: " + accessGrantedTestResults +
+                    ( (accessDeniedTestResults == "") ? "": "\nAccess Denied To: " + accessDeniedTestResults )
             }
             else {
                 testResultsLabel.text = "Access Denied. Please see front attendance."

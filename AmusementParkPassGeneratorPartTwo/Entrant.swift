@@ -120,10 +120,10 @@ extension Entrant {
         case .discountAccess:
             var messageToEntrant = ""
             if let discount = self.pass.discountAccess[.food] {
-                messageToEntrant += "food discount: \(discount)"
+                messageToEntrant += "Food discount: \(discount)%"
             }
             if let discount = self.pass.discountAccess[.merchandise] {
-                messageToEntrant += " merchandise discount: \(discount)"
+                messageToEntrant += "\nMerchandise discount: \(discount)%"
             }
             if messageToEntrant == "" {
                 return (false, "Try becoming a VIP member to recieve a discount!")
@@ -213,7 +213,7 @@ extension Entrant {
             case .child:
                 description = "Child "
             case .classic:
-                description =  "Adult "
+                description =  "Classic "
             case .contract:
                 description =  "Contract "
             case .foodService:
@@ -300,7 +300,7 @@ enum ProjectNumber {
         case .project2001:
             return "2001"
         case .project2002:
-            return "2001"
+            return "2002"
         }
     }
 }

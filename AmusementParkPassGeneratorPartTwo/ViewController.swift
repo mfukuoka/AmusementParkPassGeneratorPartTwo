@@ -101,6 +101,11 @@ class ViewController: UIViewController {
                 subTypeFiveButton.setTitle("", for: .normal)
                 subTypeFourButton.isHidden = true
                 subTypeFiveButton.isHidden = true
+                subTypeOneButton.setTitleColor(.white, for: .normal)
+                subTypeTwoButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeThreeButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeFourButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
+                subTypeFiveButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.45), for: .normal)
                 setScreenInputFor(.employee, .manager)
                 currentType = .employee
                 currentSubType = .manager
@@ -270,7 +275,7 @@ class ViewController: UIViewController {
         if let firstName = firstNameTextField.text, firstName.count > 0 {
             requiredInformation[.firstName] = firstName
         }
-        if let lastName = lastNameTextField.text {
+        if let lastName = lastNameTextField.text, lastName.count > 0 {
             requiredInformation[.lastName] = lastName
         }
         if let streetAddress = streetAddressTextField.text, streetAddress.count > 0  {

@@ -152,7 +152,7 @@ struct AmusementPark {
                 case .vip:
                     pass.rideAccess = [.allRides, .skipLines]
                     pass.discountAccess[.food] = 10.0
-                    pass.discountAccess[.merchandise] = 25.0
+                    pass.discountAccess[.merchandise] = 20.0
                 case .child:
                     //check if a dob was given
                     guard let dob = requiredInformation[.dob] as? String else {
@@ -210,10 +210,12 @@ struct AmusementPark {
                     throw RegistrationError.firstName
                 }
                 information[.firstName] = try firstName.isReasonableLength(.firstName)
+                
                 guard let lastName = requiredInformation[.lastName] as? String else {
                     throw RegistrationError.lastName
                 }
                 information[.lastName] = try lastName.isReasonableLength(.lastName)
+                
                 guard let streetAddress = requiredInformation[.streetAddress] as? String else {
                     throw RegistrationError.streetAddress
                 }
@@ -333,8 +335,14 @@ struct AmusementPark {
             guard let dob = requiredInformation[.dob] as? String else {
                 throw RegistrationError.dob
             }
-            
-            information[.dob] = dob
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            if let _ = dateFormatter.date(from: dob) {
+                information[.dob] = dob
+            }
+            else {
+                throw RegistrationError.dobWrongFormat
+            }
             guard let firstName = requiredInformation[.firstName] as? String else {
                 throw RegistrationError.firstName
             }
